@@ -117,7 +117,7 @@ const projects = {
         tech: ["LightAutoML", "Scikit-learn", "Lifelines", "XGBoost", "Pandas", "Matplotlib", "CUDA", "PyTorch"],
         links: [
             { text: "View Project", url: "#", icon: "fas fa-external-link-alt" },
-            { text: "GitHub Repository", url: "#", icon: "fab fa-github" }
+            { text: "GitHub Repository", url: "https://github.com/deekshant4758/hct-survival-prediction", icon: "fab fa-github" }
         ]
     },
     project2: {
@@ -127,7 +127,7 @@ const projects = {
         tech: ["Next.js", "React", "Prisma", "PostgreSQL", "Tailwind CSS", "JWT", "Axios", "Node.js"],
         links: [
             { text: "Live Demo", url: "https://planify-main.netlify.app/", icon: "fas fa-external-link-alt" },
-            { text: "GitHub Repository", url: "#", icon: "fab fa-github" }
+            { text: "GitHub Repository", url: "https://github.com/deekshant4758/planify", icon: "fab fa-github" }
         ]
     },
     project3: {
@@ -137,7 +137,7 @@ const projects = {
         tech: ["TensorFlow", "Keras", "OpenCV", "Pandas", "Matplotlib", "NumPy", "Scikit-learn"],
         links: [
             { text: "View Project", url: "#", icon: "fas fa-external-link-alt" },
-            { text: "GitHub Repository", url: "#", icon: "fab fa-github" }
+            { text: "GitHub Repository", url: "https://github.com/DataDreamer88/Potato-leaf-disease-classification", icon: "fab fa-github" }
         ]
     }
 };
