@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — Deekshant Gupta</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Filter Bar ─────────────────────────── */
+    .filter-bar {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+    .filter-btn {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-2);
+      background: transparent;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .filter-btn:hover { border-color: var(--border-bright); color: var(--text); }
+    .filter-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-glow);
+    }
+    .filter-btn .count {
+      display: inline-block;
+      font-size: 0.55rem;
+      padding: 0 0.3rem;
+      margin-left: 0.35rem;
+      background: var(--surface-2);
+      border-radius: 3px;
+      color: var(--text-3);
+      vertical-align: middle;
+      line-height: 1.6;
+    }
+    .filter-btn.active .count { background: rgba(56,139,253,0.15); color: var(--accent); }
+
+    /* ── Project Grid ───────────────────────── */
+    #projectsGrid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.25rem;
+    }
+
+    .proj-card[hidden] { display: none !important; }
+
+    /* ── Card Base ──────────────────────────── */
+    .proj-card {
+      grid-column: span 6;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+      animation: cardIn 0.3s ease both;
+    }
+    .proj-card.size-hero { grid-column: span 8; }
+    .proj-card.size-hero + .proj-card:not([hidden]) { grid-column: span 4; }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .proj-card:hover {
+      border-color: var(--border-bright);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.35), 0 0 30px rgba(56,139,253,0.08);
+    }
+
+    /* Accent bar at top */
+    .proj-accent-bar {
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--cyan));
+      width: 0;
+      transition: width 0.4s ease;
+      flex-shrink: 0;
+    }
+    .proj-card:hover .proj-accent-bar { width: 100%; }
+
+    /* Body */
+    .proj-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+      flex: 1;
+    }
+    .proj-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .proj-number {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      color: var(--text-3);
+    }
+    .proj-date {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--text-3);
+    }
+    .proj-title {
+      font-family: var(--display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      line-height: 1.2;
+      transition: color 0.25s;
+    }
+    .proj-card:hover .proj-title { color: var(--accent); }
+    .proj-card.cat-ml:hover .proj-title { color: var(--cyan); }
+    .proj-card.cat-fullstack:hover .proj-title { color: var(--purple); }
+
+    .proj-desc {
+      font-size: 0.875rem;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+    .proj-highlights {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .proj-highlight {
+      display: grid;
+      grid-template-columns: 14px 1fr;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+    .proj-highlight-arrow {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      padding-top: 1px;
+    }
+    .cat-ml .proj-highlight-arrow { color: var(--cyan); }
+    .cat-fullstack .proj-highlight-arrow { color: var(--purple); }
+
+    /* Footer */
+    .proj-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .proj-link {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      transition: all 0.2s;
+    }
+    .proj-link:hover { opacity: 0.7; }
+    .proj-link.ghost { color: var(--text-3); }
+    .proj-link.ghost:hover { color: var(--text-2); }
+    .cat-ml .proj-link:not(.ghost) { color: var(--cyan); }
+    .cat-fullstack .proj-link:not(.ghost) { color: var(--purple); }
+
+    /* Empty state */
+    #emptyState {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 5rem 2rem;
+      display: none;
+    }
+    #emptyState.visible { display: block; }
+    #emptyState p { font-family: var(--mono); font-size: 0.85rem; color: var(--text-3); }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      #projectsGrid { grid-template-columns: 1fr 1fr; }
+      .proj-card,
+      .proj-card.size-hero,
+      .proj-card.size-hero + .proj-card:not([hidden]) { grid-column: span 1; }
+    }
+    @media (max-width: 580px) {
+      #projectsGrid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="grid-bg">
+  <div id="nav-placeholder"></div>
+
+  <main>
+    <section class="section">
+
+      <!-- Header -->
+      <div data-reveal>
+        <div class="section-label">Selected Works</div>
+        <h1 class="display-xl" style="margin-bottom:0.75rem">Projects<span class="text-accent">.</span></h1>
+        <p style="color:var(--text-2);max-width:480px;font-size:0.95rem;line-height:1.7;margin-bottom:2rem">
+          Backend systems, ML models, and full-stack apps — each solving a real problem with precision.
+        </p>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="filter-bar" id="filterBar" data-reveal data-delay="0.05"></div>
+
+      <!-- Cards Grid -->
+      <div id="projectsGrid">
+        <div id="emptyState">
+          <p>// No projects in this category yet.</p>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="components.js"></script>
+  <script src="projects.config.js"></script>
+  <script src="script.js"></script>
+  <script>
+    /* ── Count projects per category ─── */
+    function getCounts() {
+      const counts = { all: PROJECTS.length };
+      PROJECTS.forEach(p => { counts[p.category] = (counts[p.category] || 0) + 1; });
+      return counts;
+    }
+
+    /* ── Build filter buttons ──────────── */
+    function buildFilters() {
+      const bar = document.getElementById('filterBar');
+      const counts = getCounts();
+      CATEGORIES.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn' + (cat.value === 'all' ? ' active' : '');
+        btn.dataset.filter = cat.value;
+        btn.innerHTML = `${cat.label}<span class="count">${counts[cat.value] || 0}</span>`;
+        btn.addEventListener('click', () => applyFilter(cat.value));
+        bar.appendChild(btn);
+      });
+    }
+
+    /* ── Build chip HTML ───────────────── */
+    function chipsHTML(chips) {
+      return chips.map(c => `<span class="chip ${c.color}">${c.label}</span>`).join('');
+    }
+
+    /* ── Build a single card element ───── */
+    function buildCard(proj) {
+      const card = document.createElement('article');
+      card.className = `proj-card cat-${proj.category}${proj.size === 'hero' ? ' size-hero' : ''}`;
+      card.dataset.category = proj.category;
+      card.id = 'proj-' + proj.id;
+
+      const accentStyle = proj.accentColor
+        ? `style="background:linear-gradient(90deg,${proj.accentColor},var(--cyan))"`
+        : '';
+
+      const highlights = proj.highlights.map(h =>
+        `<div class="proj-highlight">
+          <span class="proj-highlight-arrow">→</span>
+          <span>${h}</span>
+        </div>`
+      ).join('');
+
+      const links = proj.links.map(l =>
+        `<a href="${l.href}" class="proj-link ${l.style === 'ghost' ? 'ghost' : ''}">${l.label}</a>`
+      ).join('');
+
+      card.innerHTML = `
+        <div class="proj-accent-bar" ${accentStyle}></div>
+        <div class="proj-body">
+          <div class="proj-meta">
+            <span class="proj-number">${proj.number} / ${proj.category}</span>
+            ${proj.date ? `<span class="proj-date">${proj.date}</span>` : ''}
+          </div>
+          <h2 class="proj-title">${proj.title}</h2>
+          <p class="proj-desc">${proj.desc}</p>
+          <div class="proj-highlights">${highlights}</div>
+          <div class="chips">${chipsHTML(proj.chips)}</div>
+        </div>
+        <div class="proj-footer">${links}</div>
+      `;
+      return card;
+    }
+
+    /* ── Render all cards into grid ────── */
+    function buildGrid() {
+      const grid = document.getElementById('projectsGrid');
+      const empty = document.getElementById('emptyState');
+      PROJECTS.forEach(proj => grid.insertBefore(buildCard(proj), empty));
+    }
+
+    /* ── Apply filter: show/hide cards ─── */
+    let activeFilter = 'all';
+    function applyFilter(filter) {
+      if (filter === activeFilter) return;
+      activeFilter = filter;
+
+      // Update button active state
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.filter === filter);
+      });
+
+      const cards = document.querySelectorAll('#projectsGrid .proj-card');
+      let visibleCount = 0;
+      let delay = 0;
+
+      cards.forEach(card => {
+        const match = filter === 'all' || card.dataset.category === filter;
+        if (match) {
+          card.hidden = false;
+          // Re-trigger entrance animation with stagger
+          card.style.animation = 'none';
+          void card.offsetHeight; // force reflow
+          card.style.animation = `cardIn 0.3s ease ${delay}s both`;
+          delay += 0.06;
+          visibleCount++;
+        } else {
+          card.hidden = true;
+        }
+      });
+
+      document.getElementById('emptyState').classList.toggle('visible', visibleCount === 0);
+    }
+
+    /* ── Init ──────────────────────────── */
+    buildFilters();
+    buildGrid();
+  </script>
+</body>
+</html>

@@ -1,217 +1,174 @@
-// Theme Toggle
-const themeToggle = document.getElementById('theme-toggle');
-const themeIcon = themeToggle.querySelector('i');
+/* ============================================
+   DEEKSHANT GUPTA — PORTFOLIO JS
+   ============================================ */
 
-// Check for saved theme preference or respect OS preference
-const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-
-if (savedTheme === 'dark') {
-    document.body.classList.add('dark-theme');
-    themeIcon.classList.remove('fa-moon');
-    themeIcon.classList.add('fa-sun');
+// ── Nav Active State ─────────────────────────
+function setActiveNav() {
+  const path = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav__links a, .mobile-menu a').forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === path) a.classList.add('active');
+  });
 }
 
-themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-theme');
-    
-    if (document.body.classList.contains('dark-theme')) {
-        localStorage.setItem('theme', 'dark');
-        themeIcon.classList.remove('fa-moon');
-        themeIcon.classList.add('fa-sun');
-    } else {
-        localStorage.setItem('theme', 'light');
-        themeIcon.classList.remove('fa-sun');
-        themeIcon.classList.add('fa-moon');
-    }
-});
+// ── Mobile Menu ──────────────────────────────
+function initMobileMenu() {
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (!hamburger || !mobileMenu) return;
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+    const isOpen = mobileMenu.classList.contains('open');
+    hamburger.querySelectorAll('span')[0].style.transform = isOpen ? 'rotate(45deg) translate(4.5px, 4.5px)' : '';
+    hamburger.querySelectorAll('span')[1].style.opacity = isOpen ? '0' : '';
+    hamburger.querySelectorAll('span')[2].style.transform = isOpen ? 'rotate(-45deg) translate(4.5px, -4.5px)' : '';
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  });
+}
 
-// Mobile Navigation
-const hamburger = document.getElementById('hamburger');
-const navMenu = document.querySelector('.nav-menu');
-
-hamburger.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    hamburger.querySelector('i').classList.toggle('fa-bars');
-    hamburger.querySelector('i').classList.toggle('fa-times');
-});
-
-// Close mobile menu when clicking on a nav link
-document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-        hamburger.querySelector('i').classList.add('fa-bars');
-        hamburger.querySelector('i').classList.remove('fa-times');
+// ── Scroll Reveal ────────────────────────────
+function initReveal() {
+  const els = document.querySelectorAll('[data-reveal]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('revealed'), (entry.target.dataset.delay || 0) * 1000);
+        observer.unobserve(entry.target);
+      }
     });
-});
+  }, { threshold: 0.1 });
+  els.forEach(el => observer.observe(el));
+}
 
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        const targetId = this.getAttribute('href');
-        if (targetId === '#') return;
-        
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-            window.scrollTo({
-                top: targetElement.offsetTop - 80,
-                behavior: 'smooth'
-            });
-        }
-    });
-});
-
-// Fade-in animation on scroll
-const fadeElements = document.querySelectorAll('.fade-in');
-
-const fadeInObserver = new IntersectionObserver((entries) => {
+// ── Progress Bars ────────────────────────────
+function initProgressBars() {
+  const bars = document.querySelectorAll('.progress-fill');
+  const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-        }
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animated');
+        observer.unobserve(entry.target);
+      }
     });
-}, {
-    threshold: 0.1
-});
+  }, { threshold: 0.3 });
+  bars.forEach(b => observer.observe(b));
+}
 
-fadeElements.forEach(element => {
-    fadeInObserver.observe(element);
-});
+// ── Typewriter Effect ─────────────────────────
+function typewriter(el, texts, speed = 80, pause = 1800) {
+  let textIndex = 0, charIndex = 0, deleting = false;
+  function tick() {
+    const current = texts[textIndex];
+    el.textContent = deleting ? current.substring(0, charIndex--) : current.substring(0, charIndex++);
+    let delay = deleting ? speed / 2 : speed;
+    if (!deleting && charIndex === current.length + 1) { delay = pause; deleting = true; }
+    else if (deleting && charIndex < 0) { deleting = false; textIndex = (textIndex + 1) % texts.length; delay = 400; }
+    setTimeout(tick, delay);
+  }
+  tick();
+}
 
-// Active navigation link on scroll
-const sections = document.querySelectorAll('section');
-const navLinks = document.querySelectorAll('.nav-link');
+// ── Counter Animation ─────────────────────────
+function animateCounter(el, target, duration = 1500) {
+  const start = performance.now();
+  function update(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(ease * target);
+    if (progress < 1) requestAnimationFrame(update);
+    else el.textContent = target;
+  }
+  requestAnimationFrame(update);
+}
 
-window.addEventListener('scroll', () => {
-    let current = '';
-    
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        
-        if (pageYOffset >= sectionTop - 100) {
-            current = section.getAttribute('id');
-        }
+function initCounters() {
+  const counters = document.querySelectorAll('[data-count]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target, parseInt(entry.target.dataset.count));
+        observer.unobserve(entry.target);
+      }
     });
-    
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-        }
-    });
-});
+  }, { threshold: 0.5 });
+  counters.forEach(c => observer.observe(c));
+}
 
-// Project Modals - FIXED VERSION
-const modal = document.getElementById('project-modal');
-const closeModal = document.querySelector('.close-modal');
-const readMoreBtns = document.querySelectorAll('.read-more-btn');
+// ── Nav Scroll Behavior ───────────────────────
+function initNavScroll() {
+  const nav = document.querySelector('.nav');
+  window.addEventListener('scroll', () => {
+    nav.style.background = window.scrollY > 20
+      ? 'rgba(8, 11, 15, 0.97)'
+      : 'rgba(8, 11, 15, 0.85)';
+  });
+}
 
-// Project data
-const projects = {
-    project1: {
-        title: "Event-Free Survival Prediction System",
-        date: "Feb 2025",
-        description: "Developed a comprehensive survival prediction system using Kaplan-Meier estimators and Cox proportional hazards models. Implemented GPU-accelerated preprocessing pipelines and custom evaluation metrics including a tailored C-index for improved accuracy. The system leverages LightAutoML for automated machine learning workflows and integrates multiple ensemble techniques for robust predictions.",
-        tech: ["LightAutoML", "Scikit-learn", "Lifelines", "XGBoost", "Pandas", "Matplotlib", "CUDA", "PyTorch"],
-        links: [
-            { text: "View Project", url: "#", icon: "fas fa-external-link-alt" },
-            { text: "GitHub Repository", url: "https://github.com/deekshant4758/hct-survival-prediction", icon: "fab fa-github" }
-        ]
-    },
-    project2: {
-        title: "Plainify – A Calendly Alternative",
-        date: "May–Aug 2025",
-        description: "Built a full-stack scheduling platform that allows users to create personalized booking pages. Implemented JWT authentication, event management, and calendar synchronization. Developed responsive dashboards with React and Tailwind CSS, and built a robust backend with Next.js API routes, Prisma ORM, and PostgreSQL database. The platform supports timezone detection, email notifications, and Google Calendar integration.",
-        tech: ["Next.js", "React", "Prisma", "PostgreSQL", "Tailwind CSS", "JWT", "Axios", "Node.js"],
-        links: [
-            { text: "Live Demo", url: "https://planify-main.netlify.app/", icon: "fas fa-external-link-alt" },
-            { text: "GitHub Repository", url: "https://github.com/deekshant4758/planify", icon: "fab fa-github" }
-        ]
-    },
-    project3: {
-        title: "Potato Disease Classification System",
-        date: "Dec 2024",
-        description: "Designed and implemented a convolutional neural network (CNN) for automatic classification of potato plant diseases. Achieved 96% accuracy through careful architecture design and extensive data augmentation. Developed preprocessing pipelines for image normalization, resizing, and augmentation. The system can distinguish between early blight, late blight, and healthy potato plants with high precision.",
-        tech: ["TensorFlow", "Keras", "OpenCV", "Pandas", "Matplotlib", "NumPy", "Scikit-learn"],
-        links: [
-            { text: "View Project", url: "#", icon: "fas fa-external-link-alt" },
-            { text: "GitHub Repository", url: "https://github.com/DataDreamer88/Potato-leaf-disease-classification", icon: "fab fa-github" }
-        ]
-    }
-};
+// ── Contact Form ──────────────────────────────
+function initContactForm() {
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('.btn-primary');
+    btn.textContent = 'Message Sent!';
+    btn.style.background = 'var(--green)';
+    setTimeout(() => {
+      btn.textContent = 'Send Message →';
+      btn.style.background = '';
+      form.reset();
+    }, 3000);
+  });
+}
 
-// Open modal with project details
-readMoreBtns.forEach(btn => {
+// ── Project Filter ────────────────────────────
+function initProjectFilter() {
+  const filters = document.querySelectorAll('[data-filter]');
+  const items = document.querySelectorAll('[data-category]');
+  if (!filters.length) return;
+  filters.forEach(btn => {
     btn.addEventListener('click', () => {
-        const projectId = btn.getAttribute('data-project');
-        openProjectModal(projectId);
+      filters.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      items.forEach(item => {
+        const show = filter === 'all' || item.dataset.category === filter;
+        item.style.opacity = show ? '1' : '0.3';
+        item.style.transform = show ? 'scale(1)' : 'scale(0.97)';
+      });
     });
-});
-
-// Close modal when clicking on X
-closeModal.addEventListener('click', closeModalFunc);
-
-// Close modal when clicking outside content
-window.addEventListener('click', (e) => {
-    if (e.target === modal) {
-        closeModalFunc();
-    }
-});
-
-// Close modal with Escape key
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('show')) {
-        closeModalFunc();
-    }
-});
-
-function openProjectModal(projectId) {
-    const project = projects[projectId];
-    if (!project) return;
-    
-    // Reset modal display property first
-    modal.style.display = 'flex';
-    
-    // Force reflow to ensure display property is applied
-    void modal.offsetHeight;
-    
-    const modalBody = document.querySelector('.modal-body');
-    modalBody.innerHTML = `
-        <div class="modal-header">
-            <h3 class="modal-title">${project.title}</h3>
-            <span class="modal-date">${project.date}</span>
-        </div>
-        <div class="modal-description">
-            <p>${project.description}</p>
-        </div>
-        <div class="modal-tech">
-            ${project.tech.map(tech => `<span class="modal-tech-tag">${tech}</span>`).join('')}
-        </div>
-        <div class="modal-links">
-            ${project.links.map(link => `
-                <a href="${link.url}" target="_blank" class="modal-link">
-                    <i class="${link.icon}"></i> ${link.text}
-                </a>
-            `).join('')}
-        </div>
-    `;
-    
-    // Add show class to trigger animation
-    setTimeout(() => {
-        modal.classList.add('show');
-        document.body.style.overflow = 'hidden'; // Prevent scrolling
-    }, 10);
+  });
 }
 
-function closeModalFunc() {
-    // Remove show class to trigger animation
-    modal.classList.remove('show');
-    document.body.style.overflow = ''; // Re-enable scrolling
-    
-    // Reset modal after transition
-    setTimeout(() => {
-        modal.style.display = 'none';
-    }, 300);
+// ── Skill Tooltip ─────────────────────────────
+function initTooltips() {
+  document.querySelectorAll('[data-tooltip]').forEach(el => {
+    const tip = document.createElement('div');
+    tip.className = 'tooltip';
+    tip.textContent = el.dataset.tooltip;
+    tip.style.cssText = `position:absolute;background:var(--surface-2);border:1px solid var(--border-bright);color:var(--text);font-family:var(--mono);font-size:0.65rem;padding:0.3rem 0.6rem;border-radius:4px;white-space:nowrap;pointer-events:none;opacity:0;transition:0.2s;z-index:100;letter-spacing:0.05em;`;
+    el.style.position = 'relative';
+    el.appendChild(tip);
+    el.addEventListener('mouseenter', () => { tip.style.opacity = '1'; tip.style.bottom = 'calc(100% + 6px)'; tip.style.left = '50%'; tip.style.transform = 'translateX(-50%)'; });
+    el.addEventListener('mouseleave', () => { tip.style.opacity = '0'; });
+  });
 }
+
+// ── Init all ─────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  setActiveNav();
+  initMobileMenu();
+  initReveal();
+  initProgressBars();
+  initCounters();
+  initNavScroll();
+  initContactForm();
+  initProjectFilter();
+  initTooltips();
+
+  // Typewriter on hero if element exists
+  const twEl = document.getElementById('typewriter');
+  if (twEl) typewriter(twEl, ['Backend Engineer', 'AI / ML Specialist', 'Full-Stack Developer', 'System Architect']);
+});
