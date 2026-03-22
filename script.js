@@ -32,14 +32,27 @@ function initMobileMenu() {
 function initReveal() {
   const els = document.querySelectorAll('[data-reveal]');
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
+    entries.forEach(entry => {
       if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('revealed'), (entry.target.dataset.delay || 0) * 1000);
+        const delay = parseFloat(entry.target.dataset.delay || 0) * 1000;
+        setTimeout(() => entry.target.classList.add('revealed'), delay);
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
   els.forEach(el => observer.observe(el));
+
+  // Immediately reveal anything already in the viewport on load
+  // (avoids elements above-the-fold being stuck invisible)
+  setTimeout(() => {
+    els.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        const delay = parseFloat(el.dataset.delay || 0) * 1000;
+        setTimeout(() => el.classList.add('revealed'), delay);
+      }
+    });
+  }, 50);
 }
 
 // ── Progress Bars ────────────────────────────
@@ -71,7 +84,7 @@ function typewriter(el, texts, speed = 80, pause = 1800) {
 }
 
 // ── Counter Animation ─────────────────────────
-function animateCounter(el, target, duration = 1500) {
+function animateCounter(el, target, duration = 1800) {
   const start = performance.now();
   function update(now) {
     const progress = Math.min((now - start) / duration, 1);
@@ -85,6 +98,10 @@ function animateCounter(el, target, duration = 1500) {
 
 function initCounters() {
   const counters = document.querySelectorAll('[data-count]');
+  if (!counters.length) return;
+
+  // For above-fold counters (hero stats), run after CSS animation completes
+  // For below-fold counters, use IntersectionObserver
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -92,35 +109,37 @@ function initCounters() {
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.5 });
-  counters.forEach(c => observer.observe(c));
+  }, { threshold: 0.3 });
+
+  counters.forEach(c => {
+    const rect = c.getBoundingClientRect();
+    const isAboveFold = rect.top < window.innerHeight;
+    if (isAboveFold) {
+      // Wait for the CSS fade-in animation to finish (longest delay is ~0.9s)
+      setTimeout(() => animateCounter(c, parseInt(c.dataset.count)), 950);
+    } else {
+      observer.observe(c);
+    }
+  });
 }
 
 // ── Nav Scroll Behavior ───────────────────────
 function initNavScroll() {
-  const nav = document.querySelector('.nav');
+  // Nav is injected by components.js — wait for it
   window.addEventListener('scroll', () => {
+    const nav = document.querySelector('.nav');
+    if (!nav) return;
     nav.style.background = window.scrollY > 20
-      ? 'rgba(8, 11, 15, 0.97)'
-      : 'rgba(8, 11, 15, 0.85)';
+      ? 'rgba(7, 9, 13, 0.97)'
+      : 'rgba(7, 9, 13, 0.88)';
   });
 }
 
 // ── Contact Form ──────────────────────────────
+// Note: contact.html handles its own submit logic inline.
+// This legacy handler is kept only as a no-op fallback.
 function initContactForm() {
-  const form = document.getElementById('contactForm');
-  if (!form) return;
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const btn = form.querySelector('.btn-primary');
-    btn.textContent = 'Message Sent!';
-    btn.style.background = 'var(--green)';
-    setTimeout(() => {
-      btn.textContent = 'Send Message →';
-      btn.style.background = '';
-      form.reset();
-    }, 3000);
-  });
+  // contact.html manages its own form submission — nothing to do here
 }
 
 // ── Project Filter ────────────────────────────
