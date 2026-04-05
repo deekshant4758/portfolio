@@ -1,606 +1,204 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Deekshant Gupta — Software Engineer & AI/ML Specialist</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
-
-    /* ─────────────────────────────────────────
-       HERO
-    ───────────────────────────────────────── */
-    .hero {
-      min-height: calc(100vh - 60px);
-      display: flex;
-      align-items: center;
-      position: relative;
-    }
-    .hero-glow {
-      position: absolute;
-      top: 0; left: 20%;
-      width: 800px; height: 500px;
-      background: radial-gradient(ellipse, rgba(77,155,255,0.06) 0%, transparent 65%);
-      pointer-events: none;
-    }
-    .hero-inner {
-      max-width: 1280px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 4rem 2.5rem;
-      display: grid;
-      grid-template-columns: 1fr 400px;
-      gap: 4rem;
-      align-items: center;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Left */
-    .hero-eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.25rem;
-      flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeInUp 0.5s ease 0.1s forwards;
-    }
-    .hero-name {
-      padding-bottom: 0.05em;
-      opacity: 0;
-      animation: fadeInUp 0.5s ease 0.22s forwards;
-      margin-bottom: 0.5rem;
-    }
-    .hero-role {
-      font-family: var(--mono);
-      font-size: 0.95rem;
-      color: var(--text-2);
-      height: 1.5em;
-      opacity: 0;
-      animation: fadeInUp 0.5s ease 0.36s forwards;
-      margin-bottom: 1.1rem;
-    }
-    .hero-desc {
-      font-size: 0.97rem;
-      color: var(--text-2);
-      line-height: 1.8;
-      max-width: 520px;
-      opacity: 0;
-      animation: fadeInUp 0.5s ease 0.48s forwards;
-      margin-bottom: 1.75rem;
-    }
-    .hero-desc strong { color: var(--text); font-weight: 500; }
-    .hero-ctas {
-      display: flex;
-      gap: 0.65rem;
-      flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeInUp 0.5s ease 0.58s forwards;
-      margin-bottom: 2rem;
-    }
-
-    /* Stats */
-    .hero-stats {
-      display: flex;
-      width: fit-content;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      background: var(--surface);
-      overflow: hidden;
-      opacity: 0;
-      animation: fadeInUp 0.5s ease 0.7s forwards;
-      margin-bottom: 1.25rem;
-    }
-    .hero-stat {
-      padding: 0.9rem 1.6rem;
-      text-align: center;
-      border-right: 1px solid var(--border);
-    }
-    .hero-stat:last-child { border-right: none; }
-    .hero-stat-num {
-      font-family: var(--display);
-      font-size: 1.55rem;
-      font-weight: 800;
-      line-height: 1;
-      color: var(--text);
-    }
-    .hero-stat-lbl {
-      font-family: var(--mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-2);
-      margin-top: 0.35rem;
-    }
-
-    /* Social row */
-    .hero-social {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeInUp 0.5s ease 0.82s forwards;
-    }
-    .hero-social-link {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.4rem 0.8rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      font-family: var(--mono);
-      font-size: 0.64rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-2);
-      transition: var(--transition);
-    }
-    .hero-social-link:hover {
-      border-color: var(--border-bright);
-      color: var(--text);
-      background: var(--surface-2);
-    }
-    .hero-social-link svg { width: 12px; height: 12px; flex-shrink: 0; opacity: 0.7; }
-
-    /* Right — terminal */
-    .hero-panel {
-      opacity: 0;
-      animation: fadeIn 0.7s ease 0.3s forwards;
-      position: relative;
-    }
-    .float-tag {
-      position: absolute;
-      font-family: var(--mono);
-      font-size: 0.64rem;
-      letter-spacing: 0.08em;
-      padding: 0.28rem 0.6rem;
-      background: var(--surface-2);
-      border: 1px solid var(--border-bright);
-      border-radius: var(--radius-sm);
-      z-index: 2;
-    }
-    .float-tag:nth-child(1) { top: -14px; right: 20px; color: var(--accent); animation: float 3s ease-in-out infinite; }
-    .float-tag:nth-child(2) { bottom: -12px; left: 14px; color: var(--cyan); animation: float 3s ease-in-out 1.5s infinite; }
-
-    /* ─────────────────────────────────────────
-       BENTO GRID — simple, no nth-child tricks
-    ───────────────────────────────────────── */
-    .bento-wrap {
-      display: grid;
-      grid-template-columns: 1.5fr 1fr 1fr;
-      grid-template-rows: auto auto auto;
-      gap: 1rem;
-    }
-
-    .bc {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 1.5rem 1.6rem;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.25s, box-shadow 0.25s;
-    }
-    .bc:hover {
-      border-color: var(--border-bright);
-      box-shadow: 0 0 24px rgba(77,155,255,0.07);
-    }
-
-    /* Backend card: col 1, rows 1–2 */
-    .bc-backend {
-      grid-column: 1;
-      grid-row: 1 / 3;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    /* Row 1 right cards */
-    .bc-ml   { grid-column: 2; grid-row: 1; }
-    .bc-live { grid-column: 3; grid-row: 1; }
-    /* Row 2 right cards */
-    .bc-full { grid-column: 2; grid-row: 2; }
-    .bc-nlp  { grid-column: 3; grid-row: 2; }
-    /* Row 3: infra spans all 3 cols */
-    .bc-infra {
-      grid-column: 1 / 4;
-      grid-row: 3;
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-    .bc-infra .bc-content { flex: 1; }
-
-    .bc--live {
-      background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
-      border-color: rgba(56,139,253,0.28);
-    }
-    .bc-tag {
-      font-family: var(--mono);
-      font-size: 0.64rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.55rem;
-      display: block;
-    }
-    .bc h3 {
-      font-family: var(--display);
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 0.45rem;
-      line-height: 1.3;
-    }
-    .bc p {
-      font-size: 0.84rem;
-      color: var(--text-2);
-      line-height: 1.65;
-    }
-    .bc-stack {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem;
-      margin-top: 0.85rem;
-    }
-    .bc-stack span {
-      font-family: var(--mono);
-      font-size: 0.62rem;
-      padding: 0.2rem 0.55rem;
-      border-radius: 3px;
-      border: 1px solid var(--border);
-      color: var(--text-2);
-      background: var(--surface-2);
-    }
-    .bc-bg {
-      position: absolute;
-      bottom: -6px; right: 4px;
-      font-size: 4.5rem;
-      opacity: 0.04;
-      font-family: var(--mono);
-      font-weight: 700;
-      line-height: 1;
-      pointer-events: none;
-      user-select: none;
-    }
-    .bc-divider {
-      width: 1px;
-      background: var(--border);
-      align-self: stretch;
-      flex-shrink: 0;
-    }
-
-    /* ─────────────────────────────────────────
-       FOOTER
-    ───────────────────────────────────────── */
-    .home-footer {
-      border-top: 1px solid var(--border);
-      padding: 2.25rem 2.5rem;
-      margin-top: 1rem;
-    }
-    .home-footer-inner {
-      max-width: 1280px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-    .home-footer-logo {
-      font-family: var(--mono);
-      font-size: 0.9rem;
-      color: var(--accent);
-      letter-spacing: 0.06em;
-      margin-bottom: 0.35rem;
-    }
-    .home-footer-tagline {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      color: var(--text-2);
-    }
-    .home-footer-links {
-      display: flex;
-      gap: 1.75rem;
-      flex-wrap: wrap;
-    }
-    .home-footer-links a {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-2);
-      transition: var(--transition);
-    }
-    .home-footer-links a:hover { color: var(--accent); }
-    .home-footer-copy {
-      font-family: var(--mono);
-      font-size: 0.73rem;
-      color: var(--text-2);
-    }
-
-    /* ─────────────────────────────────────────
-       RESPONSIVE
-    ───────────────────────────────────────── */
-    @media (max-width: 1024px) {
-      .hero-inner { grid-template-columns: 1fr; }
-      .hero-panel { display: none; }
-      .bento-wrap {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto;
-      }
-      .bc-backend { grid-column: 1 / 3; grid-row: auto; }
-      .bc-ml      { grid-column: 1;     grid-row: auto; }
-      .bc-live    { grid-column: 2;     grid-row: auto; }
-      .bc-full    { grid-column: 1;     grid-row: auto; }
-      .bc-nlp     { grid-column: 2;     grid-row: auto; }
-      .bc-infra   { grid-column: 1 / 3; grid-row: auto; }
-    }
-    @media (max-width: 640px) {
-      .bento-wrap { grid-template-columns: 1fr; }
-      .bc-backend, .bc-ml, .bc-live,
-      .bc-full, .bc-nlp, .bc-infra { grid-column: 1; grid-row: auto; }
-      .bc-infra { flex-direction: column; align-items: flex-start; gap: 1rem; }
-      .bc-divider { display: none; }
-      .hero-stats { width: 100%; }
-      .home-footer-inner { flex-direction: column; align-items: flex-start; }
-    }
-  </style>
+  <title>Deekshant Gupta | Home</title>
+  <link rel="stylesheet" href="theme.css" />
 </head>
-<body class="grid-bg">
-  <div id="nav-placeholder"></div>
+<body>
+  <div class="page-shell">
+    <div class="scroll-progress"><div class="scroll-progress__bar" data-scroll-progress></div></div>
 
-  <main>
-
-    <!-- ═══════ HERO ═══════ -->
-    <section class="hero">
-      <div class="hero-glow"></div>
-      <div class="hero-inner">
-
-        <!-- Left -->
-        <div>
-          <div class="hero-eyebrow">
-            <div class="status-badge">
-              <div class="status-dot"></div>
-              Available for opportunities
-            </div>
-            <span style="font-family:var(--mono);font-size:0.7rem;color:var(--text-3);letter-spacing:0.05em">
-              VIT Chennai &nbsp;·&nbsp; 2022–Present
-            </span>
-          </div>
-
-          <h1 class="display-xl hero-name">
-            Deekshant<br>
-            <span class="text-accent">Gupta</span>
-          </h1>
-
-          <div class="hero-role">
-            <span id="typewriter"></span><span class="cursor"></span>
-          </div>
-
-          <p class="hero-desc">
-            Designing high-performance <strong>backend systems</strong> and
-            architecting <strong>intelligent AI solutions</strong>. From
-            distributed job queues to LSTM-based forecasters — I build things
-            that scale.
-          </p>
-
-          <div class="hero-ctas">
-            <a href="projects.html"   class="btn btn-primary">View Projects →</a>
-            <a href="experience.html" class="btn btn-ghost">Experience</a>
-            <a href="contact.html"    class="btn btn-ghost">Get in Touch</a>
-          </div>
-
-          <div class="hero-stats">
-            <div class="hero-stat">
-              <div class="hero-stat-num"><span data-count="3">3</span>+</div>
-              <div class="hero-stat-lbl">Years Coding</div>
-            </div>
-            <div class="hero-stat">
-              <div class="hero-stat-num"><span data-count="8">8</span>+</div>
-              <div class="hero-stat-lbl">Projects Built</div>
-            </div>
-            <div class="hero-stat">
-              <div class="hero-stat-num">8.47</div>
-              <div class="hero-stat-lbl">CGPA</div>
-            </div>
-          </div>
-
-          <div class="hero-social">
-            <a href="https://www.linkedin.com/in/deekshant-gupta-986774202/" target="_blank" rel="noopener" class="hero-social-link">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-              LinkedIn
-            </a>
-            <a href="https://github.com/deekshant4758" target="_blank" rel="noopener" class="hero-social-link">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
-              GitHub
-            </a>
-            <a href="https://leetcode.com/u/deekshant0_3/" target="_blank" rel="noopener" class="hero-social-link">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.483 0a1.374 1.374 0 00-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 00-1.209 2.104 5.35 5.35 0 00-.125.513 5.527 5.527 0 00.062 2.362 5.83 5.83 0 00.349 1.017 5.938 5.938 0 001.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 00-1.951-.003l-2.396 2.392a3.021 3.021 0 01-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 01.066-.523 2.545 2.545 0 01.619-1.164L9.13 8.114c1.058-1.134 3.204-1.27 4.43-.278l3.501 2.831c.593.48 1.461.387 1.94-.207a1.384 1.384 0 00-.207-1.943l-3.5-2.831c-.8-.647-1.766-1.045-2.774-1.202l2.015-2.158A1.384 1.384 0 0013.483 0zm-2.866 12.815a1.38 1.38 0 00-1.38 1.382 1.38 1.38 0 001.38 1.382H20.79a1.38 1.38 0 001.38-1.382 1.38 1.38 0 00-1.38-1.382z"/></svg>
-              LeetCode
-            </a>
-            <a href="mailto:deekshant2003@gmail.com" class="hero-social-link">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              Email
-            </a>
-            <a href="#" target="_blank" class="hero-social-link">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
-              Resume
-            </a>
-          </div>
+    <nav class="topbar">
+      <div class="container topbar__inner">
+        <a class="brand" href="index.html">Deekshant Gupta</a>
+        <div class="nav-links">
+          <a class="nav-link is-active" href="index.html">Home</a>
+          <a class="nav-link" href="projects.html">Work</a>
+          <a class="nav-link" href="experience.html">Experience</a>
+          <a class="nav-link" href="about.html">About</a>
+          <a class="nav-link" href="contact.html">Contact</a>
         </div>
-
-        <!-- Right — terminal -->
-        <div class="hero-panel">
-          <div class="float-tag">Node.js · Redis</div>
-          <div class="float-tag">LSTM · ARIMA</div>
-          <div class="terminal">
-            <div class="terminal-header">
-              <div class="terminal-dot" style="background:#ff5f57"></div>
-              <div class="terminal-dot" style="background:#febc2e"></div>
-              <div class="terminal-dot" style="background:#28c840"></div>
-              <span style="font-family:var(--mono);font-size:0.62rem;color:var(--text-3);margin-left:0.5rem">~/deekshant</span>
-            </div>
-            <div class="terminal-body">
-              <div class="terminal-line">
-                <span class="terminal-prompt">$</span>
-                <span class="terminal-cmd">&nbsp;cat profile.json</span>
-              </div>
-              <div class="terminal-output" style="padding-left:0"><span style="color:var(--cyan)">{</span></div>
-              <div class="terminal-output">&nbsp;&nbsp;<span style="color:var(--accent)">"role"</span>: <span style="color:var(--green)">"SDE + AI/ML"</span>,</div>
-              <div class="terminal-output">&nbsp;&nbsp;<span style="color:var(--accent)">"college"</span>: <span style="color:var(--green)">"VIT Chennai"</span>,</div>
-              <div class="terminal-output">&nbsp;&nbsp;<span style="color:var(--accent)">"cgpa"</span>: <span style="color:var(--orange)">8.47</span>,</div>
-              <div class="terminal-output">&nbsp;&nbsp;<span style="color:var(--accent)">"intern"</span>: <span style="color:var(--green)">"Outbox Labs"</span>,</div>
-              <div class="terminal-output">&nbsp;&nbsp;<span style="color:var(--accent)">"status"</span>: <span style="color:var(--green)">"open_to_work"</span></div>
-              <div class="terminal-output" style="padding-left:0"><span style="color:var(--cyan)">}</span></div>
-              <div class="terminal-line" style="margin-top:0.3rem">
-                <span class="terminal-prompt">$</span>
-                <span style="display:inline-block;width:8px;height:14px;background:var(--accent);animation:blink 1s step-end infinite;vertical-align:middle;margin-left:6px"></span>
-              </div>
-            </div>
-          </div>
+        <div class="topbar__actions">
+          <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme"><span class="theme-toggle__sun" aria-hidden="true"></span><span class="theme-toggle__moon" aria-hidden="true"></span><span class="theme-toggle__thumb" aria-hidden="true"></span><span class="theme-toggle__label">Toggle theme</span></button>
+          <a class="btn btn--primary" href="assets/resume.pdf" target="_blank" rel="noopener">Download CV</a>
+          <button class="icon-button mobile-toggle" type="button" data-mobile-toggle aria-expanded="false" aria-label="Open navigation">Menu</button>
         </div>
-
       </div>
-    </section>
+      <div class="container mobile-panel" data-mobile-panel>
+        <a class="nav-link is-active" href="index.html">Home</a>
+        <a class="nav-link" href="projects.html">Work</a>
+        <a class="nav-link" href="experience.html">Experience</a>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="contact.html">Contact</a>
+      </div>
+    </nav>
 
-    <!-- ═══════ FOCUS AREAS ═══════ -->
-    <section class="section" style="padding-top:2rem;padding-bottom:3rem">
-      <div class="section-label" style="margin-bottom:0.6rem">What I Build</div>
-      <h2 class="display-lg" style="margin-bottom:1.5rem">Core Focus Areas</h2>
-
-      <div class="bento-wrap">
-
-        <!-- 1. Backend — col1, rows 1–2 -->
-        <div class="bc bc-backend">
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
           <div>
-            <span class="bc-tag">// backend systems</span>
-            <h3>Distributed<br>Architectures</h3>
-            <p>Microservices, BullMQ + Redis job queues, Docker containerisation — built for scale and fault tolerance under high load.</p>
-            <div class="bc-stack">
-              <span>Node.js</span><span>Redis</span><span>BullMQ</span><span>Docker</span><span>PostgreSQL</span>
+            <span class="eyebrow">Software Engineer / AI/ML</span>
+            <h1 class="hero-title">Deekshant Gupta</h1>
+            <p class="hero-tagline">Architecting digital systems that feel sharp, human, and built to last.</p>
+            <p class="hero-copy">
+              I build backend-heavy products, intelligent interfaces, and developer-grade systems with a strong bias toward clarity, performance, and tasteful execution. The work sits at the intersection of software engineering, applied AI, and product craft.
+            </p>
+            <div class="hero-actions" style="margin-top:2rem">
+              <a class="btn btn--primary" href="projects.html">View Selected Work</a>
+              <a class="btn btn--ghost" href="contact.html">Start a Conversation</a>
+            </div>
+
+            <div class="stats-strip">
+              <div>
+                <div class="stats-value">12+</div>
+                <div class="stats-label">Projects Delivered</div>
+              </div>
+              <div>
+                <div class="stats-value">3</div>
+                <div class="stats-label">Core Tracks</div>
+              </div>
+              <div>
+                <div class="stats-value">8.47</div>
+                <div class="stats-label">CGPA</div>
+              </div>
+              <div>
+                <div class="stats-value">2022</div>
+                <div class="stats-label">Shipping Since</div>
+              </div>
             </div>
           </div>
-          <div style="padding-top:1.25rem;border-top:1px solid var(--border);margin-top:1.5rem">
-            <a href="projects.html" style="font-family:var(--mono);font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent)">See Backend Projects →</a>
-          </div>
-          <div class="bc-bg">{ }</div>
-        </div>
 
-        <!-- 2. ML — col2, row1 -->
-        <div class="bc bc-ml">
-          <span class="bc-tag" style="color:var(--cyan)">// ml / ai</span>
-          <h3>Predictive Models</h3>
-          <p>ARIMA + LSTM hybrid forecasting, XGBoost credit risk analysis, survival analysis with neural networks.</p>
-          <div class="bc-stack">
-            <span>Python</span><span>TensorFlow</span><span>XGBoost</span>
+          <div class="hero-visual hero-visual--home">
+            <img class="hero-visual__image" src="assets/profile.jpg" alt="Portrait of Deekshant Gupta" />
+            <div class="hero-visual__badge">
+              <div class="section-label">Current Focus</div>
+              <div class="card-title" style="font-size:1.1rem;margin-top:0.6rem">Backend systems, AI workflows, and production-grade product experiences.</div>
+            </div>
           </div>
-          <div class="bc-bg" style="color:var(--cyan)">∂</div>
         </div>
+      </section>
 
-        <!-- 3. Currently — col3, row1 -->
-        <div class="bc bc-live bc--live">
-          <span class="bc-tag" style="color:var(--text-2)">// currently at</span>
-          <h3 style="margin-bottom:0.65rem">Outbox Labs</h3>
-          <div class="status-badge" style="font-size:0.62rem">
-            <div class="status-dot"></div>
-            SDE Intern · Bengaluru
-          </div>
-          <p style="margin-top:0.85rem;font-size:0.82rem">
-            Lighthouse 50→94 &nbsp;·&nbsp; 2K+ daily exports &nbsp;·&nbsp; 10+ features shipped.
+      <section class="section">
+        <div class="container">
+          <div class="section-label">What I Do</div>
+          <h2 class="section-title">Precision engineering with an editorial eye.</h2>
+          <p class="section-copy">
+            The new visual direction leans cleaner, bolder, and more intentional. I kept that aesthetic, but adapted the content to reflect your actual strengths as an engineer rather than a generic design studio.
           </p>
-          <div style="margin-top:1rem">
-            <a href="experience.html" style="font-family:var(--mono);font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent)">Full Experience →</a>
+
+          <div class="bento-grid" style="margin-top:2rem">
+            <article class="panel panel--accent">
+              <div class="section-label">Systems Architecture</div>
+              <h3 class="card-title">Scalable foundations for products that need to perform.</h3>
+              <p class="muted">Node.js services, queues, automation, and API-driven systems designed for reliability and growth.</p>
+              <div class="chip-row" style="margin-top:1rem">
+                <span class="chip">Node.js</span>
+                <span class="chip">Redis</span>
+                <span class="chip">BullMQ</span>
+                <span class="chip">Docker</span>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="section-label">Applied AI</div>
+              <h3 class="card-title">Models and retrieval workflows with practical value.</h3>
+              <p class="muted">Forecasting, ranking, retrieval, and decision support systems grounded in measurable outcomes.</p>
+            </article>
+
+            <article class="card">
+              <div class="section-label">Product Craft</div>
+              <h3 class="card-title">Interfaces that earn trust through clarity.</h3>
+              <p class="muted">Strong information hierarchy, deliberate motion, and polished developer handoff.</p>
+            </article>
+
+            <article class="card">
+              <div class="section-label">Tech Stack</div>
+              <div class="chip-row">
+                <span class="chip">TypeScript</span>
+                <span class="chip">Next.js</span>
+                <span class="chip">PostgreSQL</span>
+                <span class="chip">Prisma</span>
+                <span class="chip">Python</span>
+                <span class="chip">TensorFlow</span>
+              </div>
+            </article>
+
+            <article class="card" style="grid-column: span 2;">
+              <div class="section-label">Signals</div>
+              <h3 class="card-title">Fast-moving, but never noisy.</h3>
+              <p class="muted">The site now supports both light and dark theme with a shared visual system, responsive structure, sticky navigation, and progress feedback across the experience.</p>
+            </article>
           </div>
         </div>
+      </section>
 
-        <!-- 4. Full-Stack — col2, row2 -->
-        <div class="bc bc-full">
-          <span class="bc-tag" style="color:var(--purple)">// fullstack</span>
-          <h3>Full-Stack Apps</h3>
-          <p>React, Next.js App Router, Tailwind — shipping end-to-end production features with clean component architecture.</p>
-          <div class="bc-stack">
-            <span>Next.js</span><span>React</span><span>Tailwind</span><span>Prisma</span>
+      <section class="section section--soft">
+        <div class="container">
+          <div class="split-meta">
+            <div>
+              <div class="section-label">Selected Work</div>
+              <h2 class="section-title">A few builds that show range and depth.</h2>
+            </div>
+            <a class="btn btn--ghost" href="projects.html">View All Projects</a>
           </div>
-          <div class="bc-bg" style="color:var(--purple)">&lt;/&gt;</div>
-        </div>
 
-        <!-- 5. NLP — col3, row2 -->
-        <div class="bc bc-nlp">
-          <span class="bc-tag" style="color:var(--green)">// nlp & rag</span>
-          <h3>AI Pipelines</h3>
-          <p>RAG pipelines for legal documents, FAISS vector indexing, transformer-based semantic retrieval.</p>
-          <div class="bc-stack">
-            <span>FAISS</span><span>Transformers</span><span>RAG</span>
-          </div>
-          <div class="bc-bg" style="color:var(--green)">⟨⟩</div>
-        </div>
-
-        <!-- 6. Infra — full width row3 -->
-        <div class="bc bc-infra">
-          <span class="bc-tag" style="color:var(--orange);white-space:nowrap">// devops</span>
-          <div class="bc-divider"></div>
-          <div class="bc-content">
-            <h3 style="margin-bottom:0.3rem">Cloud &amp; Infra</h3>
-            <p>Docker Compose orchestration, AWS basics, health checks, and CI/CD deploy pipelines.</p>
-          </div>
-          <div class="bc-divider"></div>
-          <div class="bc-stack" style="margin-top:0;flex-shrink:0">
-            <span>Docker</span><span>AWS</span><span>GitHub Actions</span>
+          <div class="project-list" style="margin-top:2rem">
+            <article class="project-card">
+              <div class="project-card__cover"></div>
+              <div class="project-card__meta"><span>Backend Systems</span><span>2025</span></div>
+              <h3 class="card-title">MailScheduler</h3>
+              <p class="muted">High-volume email automation with resilient scheduling, queue recovery, and delivery control.</p>
+            </article>
+            <article class="project-card">
+              <div class="project-card__cover"></div>
+              <div class="project-card__meta"><span>Full Stack</span><span>2025</span></div>
+              <h3 class="card-title">Planify</h3>
+              <p class="muted">Scheduling product with robust auth, modular dashboards, and enterprise-friendly architecture.</p>
+            </article>
+            <article class="project-card">
+              <div class="project-card__cover"></div>
+              <div class="project-card__meta"><span>ML / AI</span><span>2024</span></div>
+              <h3 class="card-title">AgriGrow</h3>
+              <p class="muted">Hybrid ARIMA + LSTM forecasting pipeline for agricultural commodity pricing analysis.</p>
+            </article>
           </div>
         </div>
+      </section>
+    </main>
 
+    <footer class="footer">
+      <div class="container footer-grid">
+        <div>
+          <div class="brand">Deekshant Gupta</div>
+          <p class="muted" style="max-width:28rem;margin-top:1rem">Building digital systems that pair technical depth with a strong sense of visual and structural restraint.</p>
+        </div>
+        <div>
+          <div class="footer-title">Explore</div>
+          <div class="footer-links">
+            <a href="projects.html">Work</a>
+            <a href="experience.html">Experience</a>
+            <a href="about.html">About</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-title">Connect</div>
+          <div class="footer-links">
+            <a href="https://github.com/deekshant4758" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.linkedin.com/in/deekshant-gupta-986774202/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="mailto:deekshant2003@gmail.com">Email</a>
+          </div>
+        </div>
       </div>
-    </section>
-
-  </main>
-
-  <!-- ═══════ FOOTER ═══════ -->
-  <footer class="home-footer">
-    <div class="home-footer-inner">
-      <div>
-        <div class="home-footer-logo">// dg.dev</div>
-        <div class="home-footer-tagline">Deekshant Gupta — Software Engineer &amp; AI/ML Specialist</div>
-      </div>
-      <nav class="home-footer-links">
-        <a href="projects.html">Projects</a>
-        <a href="experience.html">Experience</a>
-        <a href="skills.html">Skills</a>
-        <a href="contact.html">Contact</a>
-        <a href="assets/resume.pdf" target="_blank">Resume ↗</a>
-      </nav>
-      <div class="home-footer-copy">© 2025 Deekshant Gupta · Built with precision</div>
-    </div>
-  </footer>
-
-  <div id="footer-placeholder"></div>
-  <script src="components.js"></script>
-  <script src="script.js"></script>
-  <script>
-    // Typewriter — inline init so it always fires regardless of DOMContentLoaded timing
-    (function() {
-      function startTypewriter() {
-        const el = document.getElementById('typewriter');
-        if (!el) return;
-        const texts = ['Backend Engineer', 'AI / ML Specialist', 'Full-Stack Developer', 'System Architect'];
-        let ti = 0, ci = 0, del = false;
-        function tick() {
-          const cur = texts[ti];
-          el.textContent = del ? cur.slice(0, ci--) : cur.slice(0, ci++);
-          let wait = del ? 40 : 80;
-          if (!del && ci > cur.length) { wait = 1800; del = true; }
-          else if (del && ci < 0)      { del = false; ti = (ti + 1) % texts.length; wait = 400; }
-          setTimeout(tick, wait);
-        }
-        tick();
-      }
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', startTypewriter);
-      } else {
-        startTypewriter();
-      }
-    })();
-  </script>
+    </footer>
+  </div>
+  <script src="site.js"></script>
 </body>
 </html>
+
+
+
+
+
+

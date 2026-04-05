@@ -1,340 +1,58 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Skills — Deekshant Gupta</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 1.25rem;
-    }
-    @media (max-width: 960px) { .skills-grid { grid-template-columns: 1fr; } }
-
-    /* Skill Category Cards */
-    .skill-cat {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 1.75rem;
-      transition: var(--transition);
-    }
-    .skill-cat:hover { border-color: var(--border-bright); box-shadow: var(--shadow-accent); }
-    .skill-cat-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1.5rem;
-    }
-    .skill-cat-title {
-      font-family: var(--display);
-      font-size: 1.1rem;
-      font-weight: 700;
-    }
-    .skill-cat-icon {
-      font-size: 1.1rem;
-      opacity: 0.6;
-    }
-    .skill-cat-tag {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-2);
-      margin-bottom: 1rem;
-    }
-
-    /* Skill items with progress */
-    .skill-item {
-      margin-bottom: 1.1rem;
-    }
-    .skill-item:last-child { margin-bottom: 0; }
-    .skill-item-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.4rem;
-    }
-    .skill-item-name { font-family: var(--mono); font-size: 0.78rem; color: var(--text-2); letter-spacing: 0.03em; }
-    .skill-item-level { font-family: var(--mono); font-size: 0.65rem; color: var(--text-2); }
-
-    /* Tech logo chips */
-    .tech-chips-large {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-    }
-    .tech-chip-lg {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 0.9rem;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--text-2);
-      letter-spacing: 0.05em;
-      transition: var(--transition);
-      cursor: default;
-    }
-    .tech-chip-lg:hover { border-color: var(--border-bright); color: var(--text); transform: translateY(-1px); }
-    .tech-chip-lg .dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    /* Soft Skills */
-    .soft-skills-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-    }
-    .soft-skill {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--text-2);
-      letter-spacing: 0.03em;
-    }
-    .soft-skill::before {
-      content: '✓';
-      color: var(--green);
-      font-family: var(--mono);
-    }
-
-    /* Open to work section */
-    .open-to-work {
-      background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-xl);
-      padding: 3rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .open-to-work::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 50% -20%, rgba(56,139,253,0.08) 0%, transparent 60%);
-    }
-    .open-to-work-inner { position: relative; z-index: 1; }
-
-    @media (max-width: 600px) {
-      .soft-skills-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+  <title>Deekshant Gupta | Skills</title>
+  <link rel="stylesheet" href="theme.css" />
 </head>
-<body class="grid-bg">
-  <div id="nav-placeholder"></div>
-
-  <main>
-    <section class="section">
-      <!-- Header -->
-      <div data-reveal>
-        <div class="section-label">Capabilities</div>
-        <h1 class="display-xl" style="margin-bottom:1rem">Skills<span class="text-accent">.</span></h1>
-        <p style="color:var(--text-2);max-width:520px;margin-bottom:3rem;line-height:1.7">
-          Full-stack engineering meets machine learning. A versatile toolkit honed across academic projects, internships, and production systems.
-        </p>
-      </div>
-
-      <div class="skills-grid">
-
-        <!-- Languages -->
-        <div class="skill-cat" style="grid-column: span 4" data-reveal>
-          <div class="skill-cat-header">
-            <div class="skill-cat-title">Languages</div>
-            <div class="skill-cat-icon">{ }</div>
-          </div>
-          <div class="skill-cat-tag">// Core</div>
-          <div class="skill-item">
-            <div class="skill-item-header">
-              <span class="skill-item-name">C / C++</span>
-              <span class="skill-item-level">Advanced</span>
-            </div>
-            <div class="progress-bar"><div class="progress-fill" style="width:88%"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-item-header">
-              <span class="skill-item-name">Python</span>
-              <span class="skill-item-level">Advanced</span>
-            </div>
-            <div class="progress-bar"><div class="progress-fill" style="width:90%"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-item-header">
-              <span class="skill-item-name">TypeScript</span>
-              <span class="skill-item-level">Proficient</span>
-            </div>
-            <div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-item-header">
-              <span class="skill-item-name">JavaScript</span>
-              <span class="skill-item-level">Proficient</span>
-            </div>
-            <div class="progress-bar"><div class="progress-fill" style="width:82%"></div></div>
-          </div>
+<body>
+  <div class="page-shell">
+    <div class="scroll-progress"><div class="scroll-progress__bar" data-scroll-progress></div></div>
+    <nav class="topbar">
+      <div class="container topbar__inner">
+        <a class="brand" href="index.html">Deekshant Gupta</a>
+        <div class="nav-links">
+          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link" href="projects.html">Work</a>
+          <a class="nav-link" href="experience.html">Experience</a>
+          <a class="nav-link" href="about.html">About</a>
+          <a class="nav-link" href="contact.html">Contact</a>
         </div>
-
-        <!-- Web / Frontend -->
-        <div class="skill-cat" style="grid-column: span 8" data-reveal data-delay="0.05">
-          <div class="skill-cat-header">
-            <div class="skill-cat-title">Web Ecosystem</div>
-            <div class="skill-cat-icon">⚡</div>
-          </div>
-          <div class="skill-cat-tag">// Frontend + Backend</div>
-          <div class="tech-chips-large">
-            <div class="tech-chip-lg"><div class="dot" style="background:#61dafb"></div>React</div>
-            <div class="tech-chip-lg"><div class="dot" style="background:#000;border:1px solid #555"></div>Next.js</div>
-            <div class="tech-chip-lg"><div class="dot" style="background:#339933"></div>Node.js</div>
-            <div class="tech-chip-lg"><div class="dot" style="background:#06b6d4"></div>Tailwind CSS</div>
-            <div class="tech-chip-lg"><div class="dot" style="background:#e10098"></div>GraphQL</div>
-            <div class="tech-chip-lg"><div class="dot" style="background:#444"></div>Express.js</div>
-            <div class="tech-chip-lg"><div class="dot" style="background:#ff6b6b"></div>REST API</div>
-            <div class="tech-chip-lg"><div class="dot" style="background:#85adff"></div>JWT / Clerk</div>
-            <div class="tech-chip-lg"><div class="dot" style="background:#5a67d8"></div>Prisma ORM</div>
-            <div class="tech-chip-lg"><div class="dot" style="background:#ef4444"></div>Playwright</div>
-          </div>
-        </div>
-
-        <!-- ML / AI -->
-        <div class="skill-cat" style="grid-column: span 5" data-reveal>
-          <div class="skill-cat-header">
-            <div class="skill-cat-title">ML / AI</div>
-            <div class="skill-cat-icon" style="color:var(--cyan)">∂</div>
-          </div>
-          <div class="skill-cat-tag" style="color:var(--cyan)">// Intelligent Systems</div>
-          <div class="skill-item">
-            <div class="skill-item-header">
-              <span class="skill-item-name">Scikit-learn</span>
-              <span class="skill-item-level">Advanced</span>
-            </div>
-            <div class="progress-bar"><div class="progress-fill" style="width:88%;background:linear-gradient(90deg,var(--cyan),var(--green))"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-item-header">
-              <span class="skill-item-name">TensorFlow</span>
-              <span class="skill-item-level">Proficient</span>
-            </div>
-            <div class="progress-bar"><div class="progress-fill" style="width:78%;background:linear-gradient(90deg,var(--cyan),var(--green))"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-item-header">
-              <span class="skill-item-name">XGBoost</span>
-              <span class="skill-item-level">Advanced</span>
-            </div>
-            <div class="progress-bar"><div class="progress-fill" style="width:85%;background:linear-gradient(90deg,var(--cyan),var(--green))"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-item-header">
-              <span class="skill-item-name">ARIMA / LSTM</span>
-              <span class="skill-item-level">Proficient</span>
-            </div>
-            <div class="progress-bar"><div class="progress-fill" style="width:75%;background:linear-gradient(90deg,var(--cyan),var(--green))"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-item-header">
-              <span class="skill-item-name">LightAutoML / FAISS</span>
-              <span class="skill-item-level">Working</span>
-            </div>
-            <div class="progress-bar"><div class="progress-fill" style="width:65%;background:linear-gradient(90deg,var(--cyan),var(--green))"></div></div>
-          </div>
-          <div class="chips" style="margin-top:1rem">
-            <span class="chip cyan">Pandas</span><span class="chip cyan">NumPy</span><span class="chip cyan">Matplotlib</span><span class="chip cyan">Seaborn</span><span class="chip cyan">Lifelines</span>
-          </div>
-        </div>
-
-        <!-- Infrastructure -->
-        <div class="skill-cat" style="grid-column: span 4" data-reveal data-delay="0.05">
-          <div class="skill-cat-header">
-            <div class="skill-cat-title">Infrastructure</div>
-            <div class="skill-cat-icon">🐳</div>
-          </div>
-          <div class="skill-cat-tag">// Cloud · DevOps · DB</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
-            <div>
-              <div style="font-family:var(--mono);font-size:0.68rem;color:var(--text-2);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.4rem">Database</div>
-              <div style="font-family:var(--display);font-size:1.1rem;font-weight:700">PostgreSQL</div>
-              <div style="font-family:var(--mono);font-size:0.78rem;color:var(--text-2);margin-top:0.2rem">MySQL</div>
-            </div>
-            <div>
-              <div style="font-family:var(--mono);font-size:0.68rem;color:var(--text-2);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.4rem">Caching</div>
-              <div style="font-family:var(--display);font-size:1.1rem;font-weight:700">Redis</div>
-              <div style="font-family:var(--mono);font-size:0.78rem;color:var(--text-2);margin-top:0.2rem">BullMQ</div>
-            </div>
-            <div>
-              <div style="font-family:var(--mono);font-size:0.68rem;color:var(--text-2);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.4rem">Containers</div>
-              <div style="font-family:var(--display);font-size:1.1rem;font-weight:700">Docker</div>
-              <div style="font-family:var(--mono);font-size:0.78rem;color:var(--text-2);margin-top:0.2rem">Compose</div>
-            </div>
-            <div>
-              <div style="font-family:var(--mono);font-size:0.68rem;color:var(--text-2);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.4rem">Cloud</div>
-              <div style="font-family:var(--display);font-size:1.1rem;font-weight:700">AWS</div>
-              <div style="font-family:var(--mono);font-size:0.78rem;color:var(--text-2);margin-top:0.2rem">Azure</div>
-            </div>
-          </div>
-          <div class="chips" style="margin-top:1.25rem">
-            <span class="chip">Git</span><span class="chip">GitHub</span><span class="chip">Postman</span><span class="chip">Jupyter</span>
-          </div>
-        </div>
-
-        <!-- Soft Skills -->
-        <div class="skill-cat" style="grid-column: span 3" data-reveal data-delay="0.1">
-          <div class="skill-cat-header">
-            <div class="skill-cat-title">Soft Skills</div>
-            <div class="skill-cat-icon">💡</div>
-          </div>
-          <div class="skill-cat-tag">// Human Side</div>
-          <div class="soft-skills-grid">
-            <div class="soft-skill">Problem Solving</div>
-            <div class="soft-skill">Self-Learning</div>
-            <div class="soft-skill">Adaptability</div>
-            <div class="soft-skill">Collaboration</div>
-            <div class="soft-skill">Ownership</div>
-            <div class="soft-skill">System Thinking</div>
-          </div>
-          <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border)">
-            <div class="skill-cat-tag">// Certifications</div>
-            <div style="font-family:var(--mono);font-size:0.72rem;color:var(--text-2);line-height:2">
-              Azure AI Fundamentals<br />
-              OCI AI Foundation Associate
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Open to Work CTA -->
-      <div class="open-to-work" style="margin-top:3rem" data-reveal data-delay="0.1">
-        <div class="open-to-work-inner">
-          <div class="status-badge" style="margin: 0 auto 1.5rem">
-            <div class="status-dot"></div>
-            Open to Work
-          </div>
-          <h2 class="display-lg" style="margin-bottom:1rem">Ready for the next challenge</h2>
-          <p style="color:var(--text-2);max-width:480px;margin:0 auto 2rem;line-height:1.7">
-            Looking for SDE or AI/ML roles where I can architect scalable systems and build intelligent solutions.
-          </p>
-          <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
-            <a href="contact.html" class="btn btn-primary">Get in Touch →</a>
-            <a href="projects.html" class="btn btn-ghost">See My Work</a>
-          </div>
+        <div class="topbar__actions">
+          <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme"><span class="theme-toggle__sun" aria-hidden="true"></span><span class="theme-toggle__moon" aria-hidden="true"></span><span class="theme-toggle__thumb" aria-hidden="true"></span><span class="theme-toggle__label">Toggle theme</span></button>
+          <button class="icon-button mobile-toggle" type="button" data-mobile-toggle aria-expanded="false">Menu</button>
         </div>
       </div>
-    </section>
-  </main>
+      <div class="container mobile-panel" data-mobile-panel>
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="projects.html">Work</a>
+        <a class="nav-link" href="experience.html">Experience</a>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="contact.html">Contact</a>
+      </div>
+    </nav>
 
-  <div id="footer-placeholder"></div>
-  <script src="components.js"></script>
-  <script src="script.js"></script>
+    <main>
+      <section class="section">
+        <div class="container">
+          <div class="section-label">Capabilities</div>
+          <h1 class="section-title">The stack behind the work.</h1>
+          <div class="grid-3" style="margin-top:2rem">
+            <article class="card"><h3 class="card-title">Languages</h3><p class="muted">TypeScript, JavaScript, Python, C++, SQL.</p></article>
+            <article class="card"><h3 class="card-title">Backend</h3><p class="muted">Node.js, Express, Prisma, PostgreSQL, Redis, BullMQ.</p></article>
+            <article class="card"><h3 class="card-title">AI / ML</h3><p class="muted">TensorFlow, XGBoost, LightAutoML, FAISS, transformers.</p></article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer"><div class="container footer-grid"><div><div class="brand">Deekshant Gupta</div></div></div></footer>
+  </div>
+  <script src="site.js"></script>
 </body>
 </html>
+
+
+
+

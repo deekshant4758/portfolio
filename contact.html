@@ -1,449 +1,103 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact — Deekshant Gupta</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <style>
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 400px 1fr;
-      gap: 3rem;
-      align-items: start;
-    }
-    @media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; gap: 2rem; } }
-
-    .info-panel { display: flex; flex-direction: column; gap: 1.75rem; }
-    .contact-items { display: flex; flex-direction: column; gap: 0.8rem; }
-    .contact-item { display: flex; align-items: center; gap: 0.9rem; }
-    .ci-icon {
-      width: 40px; height: 40px; border-radius: var(--radius);
-      background: var(--surface-2); border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1rem; flex-shrink: 0; transition: var(--transition);
-    }
-    .contact-item:hover .ci-icon { border-color: var(--border-bright); background: var(--surface-3); }
-    .ci-label { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-3); margin-bottom: 0.12rem; }
-    .ci-value { font-size: 0.9rem; color: var(--text); font-weight: 500; }
-    .ci-value a { color: var(--text); transition: var(--transition); }
-    .ci-value a:hover { color: var(--accent); }
-
-    .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
-    @media (max-width: 560px) { .social-grid { grid-template-columns: 1fr; } }
-    .social-card {
-      display: flex; align-items: center; gap: 0.7rem;
-      padding: 0.8rem 0.9rem; background: var(--surface);
-      border: 1px solid var(--border); border-radius: var(--radius-lg); transition: var(--transition);
-    }
-    .social-card:hover { border-color: var(--border-bright); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
-    .sc-icon { width: 32px; height: 32px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 0.65rem; font-weight: 700; flex-shrink: 0; }
-    .sc-name { font-family: var(--display); font-size: 0.85rem; font-weight: 600; color: var(--text); }
-    .sc-handle { font-family: var(--mono); font-size: 0.62rem; color: var(--text-2); margin-top: 0.08rem; }
-    .sc-arrow { margin-left: auto; font-family: var(--mono); font-size: 0.8rem; color: var(--text-3); transition: var(--transition); }
-    .social-card:hover .sc-arrow { color: var(--accent); transform: translateX(3px); }
-
-    .avail-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius-lg); padding: 1.4rem 1.5rem;
-      position: relative; overflow: hidden;
-    }
-    .avail-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--green), var(--cyan)); }
-    .avail-card p { font-size: 0.86rem; color: var(--text-2); line-height: 1.7; margin-top: 0.85rem; }
-    .avail-card p strong { color: var(--text); font-weight: 500; }
-
-    .email-note {
-      background: var(--surface); border: 1px solid var(--border);
-      border-left: 3px solid var(--accent); border-radius: 0 var(--radius-lg) var(--radius-lg) 0; padding: 1rem 1.25rem;
-    }
-    .email-note p { font-size: 0.82rem; color: var(--text-2); line-height: 1.65; }
-    .email-note strong { color: var(--text); font-weight: 500; }
-
-    .form-wrap {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius-xl); padding: 2.25rem;
-      position: relative; overflow: hidden;
-    }
-    .form-wrap::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--cyan)); }
-    .form-heading { margin-bottom: 1.75rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
-    .form-heading h2 { font-family: var(--display); font-size: 1.4rem; font-weight: 700; margin-bottom: 0.3rem; }
-    .form-heading p { font-size: 0.86rem; color: var(--text-2); }
-
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.1rem; }
-    @media (max-width: 520px) { .form-row { grid-template-columns: 1fr; } }
-    .form-field { margin-bottom: 1.1rem; }
-    .form-label { display: block; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-2); margin-bottom: 0.45rem; transition: color var(--transition); }
-    .form-field:focus-within .form-label { color: var(--accent); }
-    .form-input { width: 100%; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.7rem 0.95rem; font-family: var(--body); font-size: 0.9rem; color: var(--text); outline: none; transition: var(--transition); -webkit-appearance: none; }
-    .form-input::placeholder { color: var(--text-3); }
-    .form-input:focus { border-color: var(--accent); background: var(--surface-3); box-shadow: 0 0 0 3px rgba(77,155,255,0.1); }
-    .form-field.has-error .form-input { border-color: #ff5757; }
-    .field-hint { font-family: var(--mono); font-size: 0.63rem; color: transparent; margin-top: 0.3rem; transition: color var(--transition); }
-    .form-field.has-error .field-hint { color: #ff6b6b; }
-    textarea.form-input { resize: vertical; min-height: 130px; line-height: 1.65; }
-    .char-row { display: flex; justify-content: flex-end; margin-top: 0.3rem; }
-    .char-count { font-family: var(--mono); font-size: 0.62rem; color: var(--text-3); }
-    .char-count.warn { color: var(--orange); }
-
-    .topic-group { display: flex; flex-wrap: wrap; gap: 0.45rem; }
-    .topic-pill { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.35rem 0.8rem; border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text-2); background: var(--surface-2); cursor: pointer; transition: var(--transition); user-select: none; }
-    .topic-pill:hover { border-color: var(--border-bright); color: var(--text); }
-    .topic-pill.active { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
-
-    .submit-btn { width: 100%; padding: 0.85rem; background: var(--accent); color: #07090d; font-family: var(--mono); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; border-radius: var(--radius); cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 0.5rem; border: none; margin-top: 1.5rem; }
-    .submit-btn:hover:not(:disabled) { background: #6babff; box-shadow: 0 0 24px rgba(77,155,255,0.4); transform: translateY(-1px); }
-    .submit-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
-    .submit-btn.state-sending { background: var(--surface-3); color: var(--text-2); border: 1px solid var(--border); }
-    .form-note { font-family: var(--mono); font-size: 0.63rem; color: var(--text-3); text-align: center; margin-top: 0.75rem; }
-
-    .banner { border-radius: var(--radius); padding: 0.85rem 1rem; margin-bottom: 1.5rem; font-size: 0.82rem; line-height: 1.6; display: none; align-items: flex-start; gap: 0.6rem; }
-    .banner.visible { display: flex; }
-    .banner-icon { flex-shrink: 0; margin-top: 0.05rem; }
-    .banner p { margin: 0; }
-    .banner a { text-decoration: underline; text-underline-offset: 2px; }
-    .banner--warn { background: rgba(251,146,84,0.08); border: 1px solid rgba(251,146,84,0.3); color: var(--orange); }
-    .banner--error { background: rgba(255,87,87,0.08); border: 1px solid rgba(255,87,87,0.3); color: #ff8a8a; }
-    .banner--error a { color: var(--accent); }
-
-    .success-overlay { display: none; flex-direction: column; align-items: center; text-align: center; gap: 1rem; padding: 2.5rem 1.5rem; }
-    .success-overlay.visible { display: flex; }
-    .success-icon { width: 52px; height: 52px; border-radius: 50%; background: var(--green-dim); border: 1px solid rgba(76,200,138,0.4); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
-    .success-overlay h3 { font-family: var(--display); font-size: 1.25rem; font-weight: 700; }
-    .success-overlay p { font-size: 0.86rem; color: var(--text-2); line-height: 1.65; max-width: 300px; }
-    .reset-btn { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); padding: 0.45rem 1rem; border: 1px solid var(--border-bright); border-radius: var(--radius-sm); cursor: pointer; transition: var(--transition); background: transparent; }
-    .reset-btn:hover { background: var(--accent-glow); }
-  </style>
+  <title>Deekshant Gupta | Contact</title>
+  <link rel="stylesheet" href="theme.css" />
 </head>
-<body class="grid-bg">
-  <div id="nav-placeholder"></div>
-
-  <main>
-    <section class="section">
-
-      <div data-reveal>
-        <div class="section-label">Get in Touch</div>
-        <h1 class="display-xl" style="margin-bottom:0.5rem">Let's Talk<span class="text-accent">.</span></h1>
-        <p style="color:var(--text-2);max-width:500px;margin-bottom:2.5rem;font-size:0.97rem;line-height:1.8">
-          Whether it's a job opportunity, a collab idea, or just saying hi — I'm always up for an interesting conversation.
-        </p>
-      </div>
-
-      <div class="contact-grid">
-
-        <!-- LEFT: INFO -->
-        <div class="info-panel" data-reveal>
-
-          <div>
-            <div class="section-label" style="margin-bottom:1.1rem">Direct Contact</div>
-            <div class="contact-items">
-              <div class="contact-item">
-                <div class="ci-icon">✉</div>
-                <div>
-                  <div class="ci-label">Email</div>
-                  <div class="ci-value"><a href="mailto:deekshant2003@gmail.com">deekshant2003@gmail.com</a></div>
-                </div>
-              </div>
-              <div class="contact-item">
-                <div class="ci-icon">📍</div>
-                <div>
-                  <div class="ci-label">Location</div>
-                  <div class="ci-value">Bengaluru, India</div>
-                </div>
-              </div>
-              <div class="contact-item">
-                <div class="ci-icon">📱</div>
-                <div>
-                  <div class="ci-label">Phone</div>
-                  <div class="ci-value"><a href="tel:+917017521581">+91 70175 21581</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div class="section-label" style="margin-bottom:1.1rem">Find Me On</div>
-            <div class="social-grid">
-              <a href="https://www.linkedin.com/in/deekshant-gupta-986774202/" target="_blank" rel="noopener" class="social-card">
-                <div class="sc-icon" style="background:rgba(10,102,194,0.15);color:#4d9bff">in</div>
-                <div><div class="sc-name">LinkedIn</div><div class="sc-handle">Deekshant Gupta</div></div>
-                <div class="sc-arrow">→</div>
-              </a>
-              <a href="https://github.com/deekshant4758" target="_blank" rel="noopener" class="social-card">
-                <div class="sc-icon" style="background:rgba(255,255,255,0.06);color:var(--text)">gh</div>
-                <div><div class="sc-name">GitHub</div><div class="sc-handle">@deekshantgupta</div></div>
-                <div class="sc-arrow">→</div>
-              </a>
-              <a href="https://leetcode.com/u/deekshant0_3/" target="_blank" rel="noopener" class="social-card">
-                <div class="sc-icon" style="background:rgba(255,161,22,0.12);color:#ffa116">lc</div>
-                <div><div class="sc-name">LeetCode</div><div class="sc-handle">Deekshant</div></div>
-                <div class="sc-arrow">→</div>
-              </a>
-              <a href="#" target="_blank" class="social-card">
-                <div class="sc-icon" style="background:var(--accent-glow);color:var(--accent)">cv</div>
-                <div><div class="sc-name">Resume</div><div class="sc-handle">Download PDF</div></div>
-                <div class="sc-arrow">↓</div>
-              </a>
-            </div>
-          </div>
-
-          <div class="avail-card">
-            <div class="status-badge"><div class="status-dot"></div>Currently at Outbox Labs</div>
-            <p>Open to <strong>full-time SDE / AI-ML roles</strong> from mid-2025. Preference for backend-heavy or AI-infused products. Based in Bengaluru — open to relocation or remote.</p>
-          </div>
-
-          <div class="email-note">
-            <p>You'll receive an <strong>auto-reply</strong> confirming I got your message, and I'll personally follow up within <strong>24 hours</strong>.</p>
-          </div>
-
+<body>
+  <div class="page-shell">
+    <div class="scroll-progress"><div class="scroll-progress__bar" data-scroll-progress></div></div>
+    <nav class="topbar">
+      <div class="container topbar__inner">
+        <a class="brand" href="index.html">Deekshant Gupta</a>
+        <div class="nav-links">
+          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link" href="projects.html">Work</a>
+          <a class="nav-link" href="experience.html">Experience</a>
+          <a class="nav-link" href="about.html">About</a>
+          <a class="nav-link is-active" href="contact.html">Contact</a>
         </div>
-
-        <!-- RIGHT: FORM -->
-        <div class="form-wrap" data-reveal data-delay="0.1">
-
-          <div class="form-heading">
-            <h2>Send a Message</h2>
-            <p>Fields marked * are required. You'll get an auto-confirmation instantly.</p>
-          </div>
-
-          <!-- Banners -->
-          <div class="banner banner--warn" id="setupBanner">
-            <span class="banner-icon">⚙️</span>
-            <p><strong>EmailJS not configured.</strong> Fill in your credentials in <code style="background:rgba(251,146,84,0.15);padding:0.1rem 0.35rem;border-radius:3px;font-family:var(--mono);font-size:0.75rem">emailjs.config.js</code></p>
-          </div>
-          <div class="banner banner--error" id="errorBanner">
-            <span class="banner-icon">⚠️</span>
-            <p id="errorMsg">Something went wrong. Please email me directly at <a href="mailto:deekshant2003@gmail.com">deekshant2003@gmail.com</a></p>
-          </div>
-
-          <!-- Success -->
-          <div class="success-overlay" id="successOverlay">
-            <div class="success-icon">✓</div>
-            <h3>Message sent!</h3>
-            <p>Thanks for reaching out. A confirmation is heading to your inbox. I'll personally reply within 24 hours.</p>
-            <button class="reset-btn" onclick="resetForm()">Send Another →</button>
-          </div>
-
-          <!-- Form -->
-          <form id="contactForm" novalidate>
-            <div class="form-row">
-              <div class="form-field" id="field-fname">
-                <label class="form-label" for="fname">First Name *</label>
-                <input class="form-input" type="text" id="fname" placeholder="Jane" autocomplete="given-name" required />
-                <div class="field-hint">Please enter your first name.</div>
-              </div>
-              <div class="form-field">
-                <label class="form-label" for="lname">Last Name</label>
-                <input class="form-input" type="text" id="lname" placeholder="Doe" autocomplete="family-name" />
-              </div>
-            </div>
-
-            <div class="form-field" id="field-email">
-              <label class="form-label" for="email">Email Address *</label>
-              <input class="form-input" type="email" id="email" placeholder="you@company.com" autocomplete="email" required />
-              <div class="field-hint">Please enter a valid email address.</div>
-            </div>
-
-            <div class="form-field">
-              <label class="form-label" for="company">Company / Organisation</label>
-              <input class="form-input" type="text" id="company" placeholder="Acme Corp (optional)" autocomplete="organization" />
-            </div>
-
-            <div class="form-field">
-              <label class="form-label">What's this about? *</label>
-              <div class="topic-group">
-                <div class="topic-pill active" data-value="Job Opportunity">Job Opportunity</div>
-                <div class="topic-pill" data-value="Collaboration">Collaboration</div>
-                <div class="topic-pill" data-value="Project Idea">Project Idea</div>
-                <div class="topic-pill" data-value="Internship">Internship</div>
-                <div class="topic-pill" data-value="Other">Other</div>
-              </div>
-            </div>
-
-            <div class="form-field" id="field-message">
-              <label class="form-label" for="message">Message *</label>
-              <textarea class="form-input" id="message" placeholder="Tell me about your project, role, or what's on your mind..." maxlength="1000" required></textarea>
-              <div class="char-row"><span class="char-count" id="charCount">0 / 1000</span></div>
-              <div class="field-hint">Please write a message (min. 10 characters).</div>
-            </div>
-
-            <button class="submit-btn" type="submit" id="submitBtn">
-              <span id="btnText">Send Message</span>
-              <span id="btnIcon">→</span>
-            </button>
-            <p class="form-note">No spam, no newsletters — just a direct conversation.</p>
-          </form>
-
+        <div class="topbar__actions">
+          <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme"><span class="theme-toggle__sun" aria-hidden="true"></span><span class="theme-toggle__moon" aria-hidden="true"></span><span class="theme-toggle__thumb" aria-hidden="true"></span><span class="theme-toggle__label">Toggle theme</span></button>
+          <a class="btn btn--primary" href="assets/resume.pdf" target="_blank" rel="noopener">Download CV</a>
+          <button class="icon-button mobile-toggle" type="button" data-mobile-toggle aria-expanded="false">Menu</button>
         </div>
       </div>
-    </section>
-  </main>
+      <div class="container mobile-panel" data-mobile-panel>
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="projects.html">Work</a>
+        <a class="nav-link" href="experience.html">Experience</a>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link is-active" href="contact.html">Contact</a>
+      </div>
+    </nav>
 
-  <div id="footer-placeholder"></div>
+    <main>
+      <section class="section">
+        <div class="container">
+          <div class="section-label">Contact</div>
+          <h1 class="section-title">Let&#39;s build something that deserves to exist.</h1>
+          <p class="section-copy">Open to thoughtful collaborations, product roles, engineering conversations, and strong side projects with real ambition.</p>
+        </div>
+      </section>
 
-  <script src="components.js"></script>
-  <script src="script.js"></script>
+      <section class="section section--soft">
+        <div class="container contact-grid">
+          <aside class="contact-panel">
+            <div class="footer-title">Availability</div>
+            <p><strong>Accepting select projects</strong></p>
+            <p class="muted">Remote - India</p>
+            <div style="height:1px;background:var(--line);margin:1.25rem 0"></div>
+            <div class="footer-title">Direct</div>
+            <p><a href="mailto:deekshant2003@gmail.com">deekshant2003@gmail.com</a></p>
+            <p class="muted">LinkedIn, GitHub, and email are the fastest routes.</p>
+            <div class="chip-row" style="margin-top:1rem">
+              <a class="chip" href="https://github.com/deekshant4758" target="_blank" rel="noopener">GitHub</a>
+              <a class="chip" href="https://www.linkedin.com/in/deekshant-gupta-986774202/" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+          </aside>
+
+          <div class="contact-panel">
+            <form class="form-grid" data-contact-form>
+              <label>
+                <span class="footer-title">Your Name</span>
+                <input class="input" type="text" name="name" placeholder="Name" required />
+              </label>
+              <label>
+                <span class="footer-title">Email</span>
+                <input class="input" type="email" name="email" placeholder="you@example.com" required />
+              </label>
+              <label>
+                <span class="footer-title">How can I help?</span>
+                <textarea class="input" name="message" rows="5" placeholder="Tell me about the project, role, or idea." required></textarea>
+              </label>
+              <div class="hero-actions" style="margin-top:0.5rem">
+                <button class="btn btn--primary" type="submit">Send Inquiry</button>
+                <a class="btn btn--ghost" href="mailto:deekshant2003@gmail.com">Email Directly</a>
+              </div>
+              <p class="muted" data-contact-status aria-live="polite" style="margin:0">Your message will be sent directly from the site.</p>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-grid">
+        <div><div class="brand">Deekshant Gupta</div></div>
+        <div><div class="footer-title">Explore</div><div class="footer-links"><a href="projects.html">Work</a><a href="about.html">About</a></div></div>
+        <div><div class="footer-title">Status</div><div class="footer-links"><span>Open to opportunities</span></div></div>
+      </div>
+    </footer>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script src="emailjs.config.js"></script>
-  <script>
-    /* ── Init EmailJS from config file ─────────────── */
-    const cfg = window.EMAILJS_CONFIG || {};
-    const EJ_PUBLIC_KEY    = cfg.publicKey    || '';
-    const EJ_SERVICE_ID    = cfg.serviceId    || '';
-    const EJ_TEMPLATE_MAIN = cfg.templateMain || '';
-    const EJ_TEMPLATE_AUTO = cfg.templateAuto || '';
-    const IS_CONFIGURED    = EJ_PUBLIC_KEY && !EJ_PUBLIC_KEY.startsWith('YOUR');
-
-    if (IS_CONFIGURED) {
-      emailjs.init({ publicKey: EJ_PUBLIC_KEY });
-    } else {
-      document.getElementById('setupBanner').classList.add('visible');
-    }
-
-    /* ── Topic pills ──────────────────────────────── */
-    let selectedTopic = 'Job Opportunity';
-    document.querySelectorAll('.topic-pill').forEach(p => {
-      p.addEventListener('click', () => {
-        document.querySelectorAll('.topic-pill').forEach(x => x.classList.remove('active'));
-        p.classList.add('active');
-        selectedTopic = p.dataset.value;
-      });
-    });
-
-    /* ── Char counter ─────────────────────────────── */
-    const msgEl = document.getElementById('message');
-    const ccEl  = document.getElementById('charCount');
-    msgEl.addEventListener('input', () => {
-      const n = msgEl.value.length;
-      ccEl.textContent = n + ' / 1000';
-      ccEl.classList.toggle('warn', n > 900);
-    });
-
-    /* ── Validation helpers ───────────────────────── */
-    function setError(id, show) {
-      const el = document.getElementById(id);
-      if (el) el.classList.toggle('has-error', show);
-    }
-    function clearErrors() {
-      document.querySelectorAll('.form-field.has-error').forEach(f => f.classList.remove('has-error'));
-    }
-    function validEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
-
-    function showError(msg) {
-      const banner = document.getElementById('errorBanner');
-      const msgEl2 = document.getElementById('errorMsg');
-      if (msg && msgEl2) msgEl2.innerHTML = msg;
-      banner.classList.add('visible');
-    }
-
-    /* Clear error state on re-type */
-    ['fname', 'email', 'message'].forEach(function(id) {
-      const el = document.getElementById(id);
-      if (el) el.addEventListener('input', function() {
-        setError('field-' + id, false);
-        document.getElementById('errorBanner').classList.remove('visible');
-      });
-    });
-
-    /* ── Form submit ──────────────────────────────── */
-    document.getElementById('contactForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      clearErrors();
-      document.getElementById('errorBanner').classList.remove('visible');
-
-      const fname   = document.getElementById('fname').value.trim();
-      const lname   = document.getElementById('lname').value.trim();
-      const email   = document.getElementById('email').value.trim();
-      const company = document.getElementById('company').value.trim();
-      const message = document.getElementById('message').value.trim();
-
-      let valid = true;
-      if (!fname)              { setError('field-fname',   true); valid = false; }
-      if (!validEmail(email))  { setError('field-email',   true); valid = false; }
-      if (message.length < 10) { setError('field-message', true); valid = false; }
-      if (!valid) return;
-
-      const btn     = document.getElementById('submitBtn');
-      const btnText = document.getElementById('btnText');
-      const btnIcon = document.getElementById('btnIcon');
-      btn.disabled = true;
-      btn.classList.add('state-sending');
-      btnText.textContent = 'Sending';
-      btnIcon.textContent = '...';
-
-      /*
-        TEMPLATE VARIABLES — must match exactly in your EmailJS templates:
-
-        contact_form template uses:
-          {{from_name}}, {{from_email}}, {{reply_to}},
-          {{topic}}, {{company}}, {{message}}
-
-        auto_reply template uses:
-          {{to_name}}, {{to_email}}
-
-        In the auto_reply template dashboard, the "To Email" field
-        MUST be set to: {{to_email}}  ← this fixed the 422 error
-      */
-      const notifyParams = {
-        from_name:  fname + (lname ? ' ' + lname : ''),
-        from_email: email,
-        reply_to:   email,
-        topic:      selectedTopic,
-        company:    company || '—',
-        message:    message,
-      };
-
-      const replyParams = {
-        to_name:  fname,
-        to_email: email,
-      };
-
-      try {
-        if (IS_CONFIGURED) {
-          await emailjs.send(EJ_SERVICE_ID, EJ_TEMPLATE_MAIN, notifyParams);
-          await emailjs.send(EJ_SERVICE_ID, EJ_TEMPLATE_AUTO, replyParams);
-        } else {
-          await new Promise(function(r) { setTimeout(r, 1200); });
-          console.log('DEV notify:', notifyParams);
-          console.log('DEV reply:', replyParams);
-        }
-
-        document.getElementById('contactForm').style.display = 'none';
-        document.getElementById('successOverlay').classList.add('visible');
-
-      } catch (err) {
-        console.error('EmailJS error:', err);
-        btn.disabled = false;
-        btn.classList.remove('state-sending');
-        btnText.textContent = 'Send Message';
-        btnIcon.textContent = '→';
-
-        var isRecipientErr = err && err.text && err.text.toLowerCase().includes('recipient');
-        showError(
-          isRecipientErr
-            ? 'Your message reached me but the auto-reply failed. I\'ll reply to <a href="mailto:' + email + '">' + email + '</a> directly.'
-            : 'Something went wrong. Please email me at <a href="mailto:deekshant2003@gmail.com">deekshant2003@gmail.com</a>'
-        );
-      }
-    });
-
-    /* ── Reset ────────────────────────────────────── */
-    function resetForm() {
-      var form = document.getElementById('contactForm');
-      form.reset();
-      form.style.display = '';
-      document.getElementById('successOverlay').classList.remove('visible');
-      document.getElementById('errorBanner').classList.remove('visible');
-      document.getElementById('charCount').textContent = '0 / 1000';
-      clearErrors();
-      var btn = document.getElementById('submitBtn');
-      btn.disabled = false;
-      btn.classList.remove('state-sending');
-      document.getElementById('btnText').textContent = 'Send Message';
-      document.getElementById('btnIcon').textContent = '→';
-      document.querySelectorAll('.topic-pill').forEach(function(p) { p.classList.remove('active'); });
-      document.querySelector('[data-value="Job Opportunity"]').classList.add('active');
-      selectedTopic = 'Job Opportunity';
-    }
-  </script>
+  <script src="site.js"></script>
 </body>
 </html>
+
+
+
+

@@ -24,7 +24,7 @@ const PROJECTS = [
   {
     id: "mailscheduler",
     number: "01",
-    category: "backend",
+    category: "fullstack",
     size: "hero",
     title: "MailScheduler",
     date: "Feb 2025",

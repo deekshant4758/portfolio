@@ -72,7 +72,7 @@ const EDUCATION = [
     id: "vit",
     icon: "🏛",
     name: "VIT Chennai",
-    period: "Aug 2022 — Present",
+    period: "Aug 2022 — May 2026",
     degree: "B.Tech in Computer Science Engineering · AI & ML Specialisation",
     score: "CGPA: 8.47 / 10.0",
     scoreColor: "accent",
