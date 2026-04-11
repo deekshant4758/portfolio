@@ -52,6 +52,56 @@ function initScrollProgress() {
   window.addEventListener('resize', update);
 }
 
+async function initHeroStats() {
+  const commitsEl = document.querySelector('[data-github-commits]');
+  const leetcodeEl = document.querySelector('[data-leetcode-solved]');
+  const leetcodeRankEl = document.querySelector('[data-leetcode-rank]');
+  if (!commitsEl && !leetcodeEl) return;
+
+  const githubUsername = 'deekshant4758';
+  const leetcodeUsername = 'deekshant0_3';
+  const dateFloor = new Date(Date.now() - (30 * 24 * 60 * 60 * 1000)).toISOString().slice(0, 10);
+
+  if (commitsEl) {
+    try {
+      const response = await fetch(
+        `https://api.github.com/search/commits?q=author:${githubUsername}+committer-date:>=${dateFloor}&per_page=1`,
+        {
+          headers: {
+            Accept: 'application/vnd.github+json'
+          }
+        }
+      );
+
+      if (!response.ok) throw new Error('GitHub commit lookup failed');
+
+      const data = await response.json();
+      commitsEl.textContent = String(data.total_count ?? 0);
+    } catch (error) {
+      commitsEl.textContent = '--';
+    }
+  }
+
+  if (leetcodeEl) {
+    try {
+      const solvedResponse = await fetch(`https://leetcode-stats.tashif.codes/${leetcodeUsername}`);
+
+      if (!solvedResponse.ok) throw new Error('LeetCode solved lookup failed');
+
+      const solvedData = await solvedResponse.json();
+      leetcodeEl.textContent = String(solvedData.totalSolved ?? solvedData.solvedProblem ?? '--');
+
+      if (leetcodeRankEl) {
+        const ranking = solvedData.ranking;
+        leetcodeRankEl.textContent = ranking ? new Intl.NumberFormat('en-IN').format(ranking) : '--';
+      }
+    } catch (error) {
+      leetcodeEl.textContent = '--';
+      if (leetcodeRankEl) leetcodeRankEl.textContent = '--';
+    }
+  }
+}
+
 function initContactForm() {
   const form = document.querySelector('[data-contact-form]');
   if (!form) return;
@@ -200,6 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   initMobileNav();
   initScrollProgress();
+  initHeroStats();
   initContactForm();
   initGithubProjects();
 });

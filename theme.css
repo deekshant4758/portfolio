@@ -468,6 +468,21 @@ html:not(.dark) .theme-toggle__moon {
   letter-spacing: -0.05em;
 }
 
+.stats-link {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  transition: color var(--transition), transform var(--transition);
+}
+
+.stats-link:hover {
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
 .stats-label {
   margin-top: 0.3rem;
   font-size: 0.75rem;
@@ -475,6 +490,7 @@ html:not(.dark) .theme-toggle__moon {
   letter-spacing: 0.14em;
   color: var(--text-muted);
 }
+
 
 .grid-2,
 .grid-3,
