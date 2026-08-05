@@ -52,6 +52,89 @@ function initScrollProgress() {
   window.addEventListener('resize', update);
 }
 
+function initLandingSectionScroll() {
+  if (!document.body.classList.contains('portfolio-landing')) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+
+  const sections = Array.from(document.querySelectorAll('.portfolio-landing .landing-hero, .portfolio-landing .landing-section'));
+  if (sections.length < 2) return;
+
+  const topbar = document.querySelector('.landing-topbar');
+  const getTopOffset = () => (topbar ? topbar.getBoundingClientRect().height : 0);
+
+  let wheelAccumulator = 0;
+  let resetAccumulatorTimer = 0;
+  let isLocked = false;
+  let unlockTimer = 0;
+
+  const getCurrentIndex = () => {
+    const marker = window.scrollY + getTopOffset() + 24;
+
+    for (let index = sections.length - 1; index >= 0; index -= 1) {
+      if (marker >= sections[index].offsetTop) return index;
+    }
+
+    return 0;
+  };
+
+  const scrollToIndex = (index) => {
+    const clampedIndex = Math.max(0, Math.min(index, sections.length - 1));
+    const target = sections[clampedIndex];
+    if (!target) return;
+
+    isLocked = true;
+    window.clearTimeout(unlockTimer);
+    window.scrollTo({
+      top: Math.max(0, target.offsetTop - getTopOffset()),
+      behavior: 'smooth'
+    });
+
+    unlockTimer = window.setTimeout(() => {
+      isLocked = false;
+      wheelAccumulator = 0;
+    }, 900);
+  };
+
+  window.addEventListener('wheel', (event) => {
+    if (isLocked) {
+      event.preventDefault();
+      return;
+    }
+
+    if (!event.deltaY) return;
+
+    wheelAccumulator += event.deltaY;
+    event.preventDefault();
+
+    window.clearTimeout(resetAccumulatorTimer);
+    resetAccumulatorTimer = window.setTimeout(() => {
+      wheelAccumulator = 0;
+    }, 140);
+
+    if (Math.abs(wheelAccumulator) < 160) return;
+
+    const direction = wheelAccumulator > 0 ? 1 : -1;
+    wheelAccumulator = 0;
+    scrollToIndex(getCurrentIndex() + direction);
+  }, { passive: false });
+
+  window.addEventListener('keydown', (event) => {
+    const forwardKeys = ['PageDown', 'ArrowDown', ' '];
+    const backwardKeys = ['PageUp', 'ArrowUp'];
+
+    if (![...forwardKeys, ...backwardKeys].includes(event.key)) return;
+
+    const direction = forwardKeys.includes(event.key) ? 1 : -1;
+    const nextIndex = getCurrentIndex() + direction;
+
+    if (nextIndex < 0 || nextIndex >= sections.length) return;
+
+    event.preventDefault();
+    scrollToIndex(nextIndex);
+  }, { passive: false });
+}
+
 async function initHeroStats() {
   const commitsEl = document.querySelector('[data-github-commits]');
   const leetcodeEl = document.querySelector('[data-leetcode-solved]');
@@ -119,6 +202,19 @@ function initContactForm() {
     publicKey: emailjsConfig.publicKey
   });
 
+  const describeEmailFailure = (error) => {
+    const status = error?.status;
+    // if (status === 412) {
+    //   return 'EmailJS rejected the request. Check that your site origin is allowed in the EmailJS dashboard, and that the service/template IDs match your account.';
+    // }
+
+    // if (status === 429) {
+    //   return 'EmailJS rate limit reached. Please wait a second and try again.';
+    // }
+
+    return 'Message failed to send. Please try again or email me directly. deekshant@003@gmail.com';
+  };
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -139,7 +235,6 @@ function initContactForm() {
       to_name: 'Deekshant Gupta',
       email,
       from_email: email,
-      to_email: email,
       reply_to: email,
       user_email: email,
       recipient: 'deekshant2003@gmail.com',
@@ -160,28 +255,29 @@ function initContactForm() {
       }
       if (status) status.textContent = 'Sending your message...';
 
-      await window.emailjs.send(
+      await window.emailjs.sendForm(
         emailjsConfig.serviceId,
         emailjsConfig.templateMain,
-        templateParams
+        form
       );
 
       if (emailjsConfig.templateAuto) {
-        try {
-          await window.emailjs.send(
+        window.setTimeout(() => {
+          window.emailjs.send(
             emailjsConfig.serviceId,
             emailjsConfig.templateAuto,
             templateParams
-          );
-        } catch (error) {
-          console.warn('EmailJS auto-reply failed:', error);
-        }
+          ).catch((error) => {
+            console.warn('EmailJS auto-reply failed:', error);
+          });
+        }, 1100);
       }
 
       form.reset();
       if (status) status.textContent = 'Message sent successfully. I will get back to you soon.';
     } catch (error) {
-      if (status) status.textContent = 'Message failed to send. Please try again or email me directly.';
+      console.error('EmailJS send failed:', error);
+      if (status) status.textContent = describeEmailFailure(error);
     } finally {
       if (submitButton) {
         submitButton.disabled = false;
@@ -250,6 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   initMobileNav();
   initScrollProgress();
+  initLandingSectionScroll();
   initHeroStats();
   initContactForm();
   initGithubProjects();

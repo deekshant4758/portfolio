@@ -569,6 +569,41 @@ html:not(.dark) .theme-toggle__moon {
   color: color-mix(in srgb, var(--primary) 70%, var(--text));
 }
 
+.project-link-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0.8rem 1.05rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  transition: transform var(--transition), border-color var(--transition), background var(--transition), box-shadow var(--transition);
+}
+
+.project-link:hover {
+  transform: translateY(-1px);
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-soft);
+}
+
+.project-link--primary {
+  color: white;
+  background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+  border-color: transparent;
+}
+
 .project-list {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -635,40 +670,16 @@ html:not(.dark) .theme-toggle__moon {
   z-index: 1;
 }
 
-.project-card__cover--planify::before {
+.project-card__cover--nextflow::before {
   background:
     linear-gradient(160deg, rgba(125, 162, 255, 0.14), transparent 50%),
     linear-gradient(135deg, #1f2a44 0%, #33456b 52%, #6178ac 100%);
 }
 
-.project-card__cover--agrigrow::before {
+.project-card__cover--askwise::before {
   background:
     linear-gradient(160deg, rgba(111, 238, 177, 0.12), transparent 45%),
     linear-gradient(135deg, #122e28 0%, #1c5f51 50%, #76b27a 100%);
-}
-
-.project-card__cover--microfleet::before {
-  background:
-    linear-gradient(160deg, rgba(123, 170, 255, 0.14), transparent 45%),
-    linear-gradient(135deg, #161f39 0%, #20325e 48%, #4f7de8 100%);
-}
-
-.project-card__cover--legal::before {
-  background:
-    linear-gradient(160deg, rgba(255, 189, 137, 0.12), transparent 45%),
-    linear-gradient(135deg, #2c2131 0%, #4c2c5a 50%, #b56d7d 100%);
-}
-
-.project-card__cover--survival::before {
-  background:
-    linear-gradient(160deg, rgba(255, 122, 122, 0.12), transparent 45%),
-    linear-gradient(135deg, #2d1620 0%, #5f2345 50%, #d36d8d 100%);
-}
-
-.project-card__cover--mindset::before {
-  background:
-    linear-gradient(160deg, rgba(160, 171, 197, 0.14), transparent 45%),
-    linear-gradient(135deg, #18202f 0%, #2b3950 50%, #5b728f 100%);
 }
 
 .project-cover__stack {
@@ -1008,6 +1019,11 @@ html:not(.dark) .theme-toggle__moon {
   overflow-x: clip;
 }
 
+body.portfolio-landing {
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: 88px;
+}
+
 .portfolio-landing .container {
   width: min(1140px, calc(100% - 2rem));
 }
@@ -1342,6 +1358,9 @@ html:not(.dark) .theme-toggle__moon {
   padding: 4.2rem 0;
   background: #f3f2f0;
   color: #0f0d17;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  scroll-margin-top: 88px;
 }
 
 .portfolio-landing .landing-section--projects,
@@ -1417,6 +1436,8 @@ html:not(.dark) .theme-toggle__moon {
 
 .portfolio-landing .landing-project-card {
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .portfolio-landing .landing-project-card__cover {
@@ -1467,6 +1488,9 @@ html:not(.dark) .theme-toggle__moon {
 
 .portfolio-landing .landing-project-card__body {
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .portfolio-landing .landing-project-card__headline {
@@ -1514,6 +1538,31 @@ html:not(.dark) .theme-toggle__moon {
   font-size: 0.65rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+.portfolio-landing .landing-project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.portfolio-landing .landing-project-actions .landing-button {
+  min-height: 40px;
+  padding: 0.78rem 1.05rem;
+  box-shadow: 4px 4px 0 rgba(255, 122, 0, 0.75);
+}
+
+.portfolio-landing .landing-project-actions .landing-button--ghost {
+  background: transparent;
+  color: var(--landing-accent);
+  border-color: var(--landing-accent);
+  box-shadow: none;
+}
+
+.portfolio-landing .landing-project-actions .landing-button--ghost:hover {
+  background: rgba(255, 122, 0, 0.08);
 }
 
 .portfolio-landing .landing-skill-card {
