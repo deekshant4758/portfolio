@@ -1,28 +1,20 @@
-import { Intro } from "@/components/Intro";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { Projects } from "@/components/Projects";
 import { Experience } from "@/components/Experience";
-import { Skills } from "@/components/Skills";
-import { GithubActivity } from "@/components/GithubActivity";
+import { Media } from "@/components/Media";
 import { About } from "@/components/About";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
-import { Dock } from "@/components/Dock";
 
 export default function Home() {
   return (
     <>
-      <noscript>
-        <style>{`#site-intro { display: none !important; }`}</style>
-      </noscript>
-
-      <Intro />
       <Navbar />
 
       <a
         href="#work"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[70] focus:rounded-md focus:bg-fg focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-ink"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[70] focus:rounded-md focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:text-paper"
       >
         Skip to content
       </a>
@@ -30,20 +22,16 @@ export default function Home() {
       <main>
         <Hero />
 
-        <div className="mx-auto w-full max-w-[1500px] px-5 sm:px-8 md:px-10">
+        <div className="mx-auto w-full max-w-[1000px] px-6 sm:px-8">
           <Projects />
           <Experience />
-          <Skills />
-          <GithubActivity />
+          <Media />
           <About />
           <Contact />
         </div>
       </main>
 
       <Footer />
-      <Dock />
-
-      <div className="h-20" aria-hidden />
     </>
   );
 }

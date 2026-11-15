@@ -1,7 +1,7 @@
 # deekshant.dev
 
 Personal portfolio of **Deekshant Gupta** — backend and AI engineer. A minimal, type-led
-single-page site with restrained motion, live GitHub activity, and a working contact form.
+single-page site with restrained motion and a config-driven media section.
 
 Built with **Next.js 16**, **TypeScript**, **Tailwind CSS v4**, and **Motion**.
 
@@ -9,55 +9,62 @@ Built with **Next.js 16**, **TypeScript**, **Tailwind CSS v4**, and **Motion**.
 
 ## Stack
 
-| Layer      | Choice                                   |
-| ---------- | ---------------------------------------- |
-| Framework  | Next.js 16 (App Router, Turbopack)       |
-| Language   | TypeScript                               |
-| Styling    | Tailwind CSS v4                          |
-| Animation  | Motion (`motion/react`)                  |
-| Icons      | Lucide + custom brand SVGs               |
-| Email      | EmailJS (client-side)                    |
-| Deployment | Vercel                                   |
+| Layer      | Choice                             |
+| ---------- | ---------------------------------- |
+| Framework  | Next.js 16 (App Router, Turbopack) |
+| Language   | TypeScript                         |
+| Styling    | Tailwind CSS v4                    |
+| Animation  | Motion (`motion/react`)            |
+| Icons      | Lucide + custom brand SVGs         |
+| Deployment | Vercel                             |
 
 ## Sections
 
-- **Hero** — availability, positioning, key numbers, scrolling marquee
-- **Selected work** — MailScheduler, NextFlow, AskWise with bespoke SVG covers
-- **Experience** — expandable roles, education, certifications
-- **Toolbox** — grouped skills
-- **GitHub activity** — live contribution graph and stats
-- **About** — portrait, story, quick facts
-- **Contact** — copy-email, socials, EmailJS form
-- **Footer + floating dock** — navigation, colophon, status
+- **Hero** — portrait, intro, links, availability
+- **Work** — MailScheduler, NextFlow, AskWise
+- **Experience** — roles, education, certifications, toolbox
+- **Media** — config-driven wins, moments, and launches
+- **About** — story and quick facts
+- **Contact** — email, phone, socials
 
 ## Local development
 
 ```bash
 npm install
-cp .env.example .env.local   # add your EmailJS credentials
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
 
-### Environment variables
-
-```env
-NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=
-NEXT_PUBLIC_EMAILJS_SERVICE_ID=
-NEXT_PUBLIC_EMAILJS_TEMPLATE_MAIN=
-NEXT_PUBLIC_EMAILJS_TEMPLATE_AUTO=
-```
-
-`NEXT_PUBLIC_EMAILJS_TEMPLATE_AUTO` is optional (auto-reply). Without any credentials the
-contact form falls back to opening a prefilled `mailto:` link.
-
 ## Editing content
 
-All copy, projects, experience, skills, certifications, and links live in
+All copy, projects, experience, skills, certifications, media, and links live in
 [`src/lib/data.ts`](src/lib/data.ts). Change the data file and the page updates everywhere.
 
 The résumé and portrait are served from `public/resume.pdf` and `public/profile.jpg`.
+
+### Adding a media item
+
+The Media section is driven by the `media` array in `src/lib/data.ts`:
+
+```ts
+export const media: MediaItem[] = [
+  {
+    id: "pose-ai",
+    title: "Pose AI Hackathon — Winner",
+    description: "Won the VIT Chennai hackathon with a pose-estimation build.",
+    date: "Mar 2024",
+    label: "Award",
+    image: "/media/pose-ai.jpg", // optional
+    alt: "Team at the Pose AI Hackathon",
+    href: "https://example.com", // optional
+  },
+];
+```
+
+Add an object to the array and it appears on the site. To include a picture, drop the file in
+`public/media/` and set `image` to `"/media/<file-name>"`. `label`, `date`, `image`, `alt`, and
+`href` are all optional except `id`, `title`, and `description`.
 
 ## Scripts
 
@@ -72,7 +79,6 @@ npm run typecheck  # TypeScript only
 
 1. Push the repository to GitHub.
 2. Import it in [Vercel](https://vercel.com/new).
-3. Add the EmailJS environment variables.
-4. Deploy.
+3. Deploy.
 
 The previous static site is preserved on the `legacy-static` git branch.

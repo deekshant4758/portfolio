@@ -4,25 +4,23 @@ export const profile = {
   handle: "@deekshant",
   role: "Backend & AI Engineer",
   location: "Chennai, India",
+  relocation: "Noida, Gurugram, Bengaluru",
+  workMode: "In office or hybrid",
+  availability: "Available immediately",
   email: "deekshant2003@gmail.com",
+  phone: "+91 70175 21581",
+  phoneHref: "+917017521581",
   github: "https://github.com/deekshant4758",
   githubUser: "deekshant4758",
   linkedin: "https://www.linkedin.com/in/deekshant-gupta-986774202/",
   leetcode: "https://leetcode.com/u/deekshant0_3/",
   leetcodeUser: "deekshant0_3",
   resume: "/resume.pdf",
-  availability: "Open to backend / AI engineering roles",
-  heroLine: "I build systems that hold up.",
-  summary:
-    "Backend-focused engineer building automation, AI workflows, and data-heavy products. I care about the unglamorous parts — queues that survive restarts, jobs that don't drop, and systems that stay boring in production.",
+  intro:
+    "I'm a backend and AI engineer. Most recently I built email infrastructure at Outbox Labs that supports 50,000+ Google and Microsoft accounts.",
+  introSecondary:
+    "Before that I trained credit-risk models at Praisnet and built a retrieval pipeline that turns dense PDFs into grounded questions. I graduated from VIT Chennai in 2026.",
 };
-
-export const stats = [
-  { value: "50k+", label: "accounts supported" },
-  { value: "97%", label: "model accuracy" },
-  { value: "3", label: "flagship systems" },
-  { value: "2", label: "engineering internships" },
-];
 
 export type Project = {
   id: string;
@@ -33,8 +31,7 @@ export type Project = {
   blurb: string;
   highlights: string[];
   stack: string[];
-  visual: "queue" | "flow" | "graph";
-  links: { label: string; href: string; primary?: boolean }[];
+  links: { label: string; href: string }[];
 };
 
 export const projects: Project[] = [
@@ -42,19 +39,17 @@ export const projects: Project[] = [
     id: "mailscheduler",
     index: "01",
     title: "MailScheduler",
-    category: "Backend / Automation",
+    category: "Backend and automation",
     year: "2025",
     blurb:
-      "Fault-tolerant email scheduling and automation with delayed delivery, bulk sends, and recovery across server restarts.",
+      "Fault-tolerant email scheduling with delayed delivery, bulk sends, and recovery across server restarts.",
     highlights: [
-      "Redis-backed BullMQ queues with automatic recovery across restarts",
+      "Redis-backed BullMQ queues that recover automatically when a server restarts",
       "Rate limiting and concurrency control for high-volume workloads",
-      "Delayed delivery, bulk campaigns, and templated automation",
     ],
-    stack: ["Next.js", "Express", "TypeScript", "BullMQ", "Redis", "MySQL", "Docker"],
-    visual: "queue",
+    stack: ["Next.js", "Express", "TypeScript", "BullMQ", "Redis", "MySQL", "Nodemailer", "Docker"],
     links: [
-      { label: "Live", href: "https://mail-scheduler-122f.vercel.app/", primary: true },
+      { label: "Live", href: "https://mail-scheduler-122f.vercel.app/" },
       { label: "Source", href: "https://github.com/deekshant4758/mailScheduler" },
     ],
   },
@@ -62,19 +57,17 @@ export const projects: Project[] = [
     id: "nextflow",
     index: "02",
     title: "NextFlow",
-    category: "AI Workflow Tool",
+    category: "AI workflow tool",
     year: "2025",
     blurb:
-      "Visual workflow studio for AI-powered image, video, and text pipelines, with secure auth and scalable background execution.",
+      "A visual studio for AI image, video, and text pipelines, with secure auth and background execution.",
     highlights: [
-      "Drag-and-drop pipeline builder for multi-step AI workflows",
+      "Drag-and-drop pipeline builder over Gemini models",
       "Clerk authentication with protected routes and per-user history",
-      "Prisma + Neon storage with Trigger.dev background jobs",
     ],
-    stack: ["Next.js", "TypeScript", "Clerk", "Prisma", "Neon", "Trigger.dev"],
-    visual: "flow",
+    stack: ["Next.js", "Node.js", "Express", "Gemini", "Clerk", "Prisma", "Neon", "Trigger.dev"],
     links: [
-      { label: "Live", href: "https://nextflow-silk-six.vercel.app/", primary: true },
+      { label: "Live", href: "https://nextflow-silk-six.vercel.app/" },
       { label: "Source", href: "https://github.com/deekshant4758/nextflow" },
     ],
   },
@@ -82,19 +75,17 @@ export const projects: Project[] = [
     id: "askwise",
     index: "03",
     title: "AskWise",
-    category: "ML / RAG",
+    category: "ML and retrieval",
     year: "2024",
     blurb:
-      "AI-powered question generation and grading over unstructured PDFs, using hybrid semantic retrieval and grounded generation.",
+      "Question generation and semantic grading over unstructured PDFs, using hybrid retrieval and grounded generation.",
     highlights: [
       "RAG pipeline with SBERT embeddings and FAISS retrieval",
       "Context-grounded question generation with T5 and BART",
-      "Semantic answer grading for academic documents",
     ],
-    stack: ["Python", "FastAPI", "Flask", "FAISS", "SBERT", "T5", "BART", "Docker"],
-    visual: "graph",
+    stack: ["Python", "FastAPI", "Flask", "SBERT", "FAISS", "T5", "BART", "PyMuPDF", "MySQL"],
     links: [
-      { label: "Source", href: "https://github.com/deekshant4758/automated-qa-pipeline", primary: true },
+      { label: "Source", href: "https://github.com/deekshant4758/automated-qa-pipeline" },
     ],
   },
 ];
@@ -105,7 +96,6 @@ export type Experience = {
   role: string;
   period: string;
   location: string;
-  current?: boolean;
   bullets: string[];
   stack: string[];
 };
@@ -118,9 +108,8 @@ export const experience: Experience[] = [
     period: "Jan 2026 — May 2026",
     location: "Bengaluru, India",
     bullets: [
-      "Integrated email account connections across 5+ platforms using third-party APIs, Redis, and BullMQ to support 50k+ Google and Microsoft accounts.",
-      "Revamped the ColdMail Reseller platform by modernising legacy mailbox operations and rewriting cron jobs for more reliable scheduling.",
-      "Migrated backend components to optimised implementations from newer products, improving performance, code quality, and maintainability.",
+      "Integrated email account connections across 5+ platforms using third-party APIs, Redis, and BullMQ, supporting 50k+ Google and Microsoft accounts.",
+      "Revamped the ColdMail Reseller platform: rewrote cron jobs, updated legacy mailbox operations, and migrated backend components to newer implementations.",
     ],
     stack: ["TypeScript", "Redis", "BullMQ", "REST APIs", "MySQL"],
   },
@@ -132,8 +121,7 @@ export const experience: Experience[] = [
     location: "Remote",
     bullets: [
       "Performed EDA on the Amex credit risk dataset (45k+ records) and engineered features like credit utilisation, employment duration, and credit score.",
-      "Built and evaluated credit default models with scikit-learn and XGBoost, selecting the best model on ROC-AUC, precision, recall, and F1.",
-      "Reached up to 97% accuracy on the final model after feature engineering and evaluation.",
+      "Built and evaluated credit default models with scikit-learn and XGBoost, reaching up to 97% accuracy on the final model.",
     ],
     stack: ["Python", "XGBoost", "scikit-learn", "Pandas"],
   },
@@ -142,73 +130,98 @@ export const experience: Experience[] = [
 export const education = {
   school: "VIT Chennai",
   degree: "B.Tech, Computer Science Engineering",
-  detail: "AI & ML Specialisation",
+  detail: "AI & ML specialisation",
   period: "Aug 2022 — Apr 2026",
+  status: "Graduated",
 };
 
 export const certifications = [
+  { name: "Pose AI Hackathon — Winner", issuer: "VIT Chennai", date: "Mar 2024" },
   { name: "Azure AI Fundamentals", issuer: "Microsoft Azure", date: "Aug 2024" },
   { name: "OCI AI Foundation Associate", issuer: "Oracle Cloud", date: "Aug 2025" },
-  { name: "Pose AI Hackathon — Winner", issuer: "VIT Chennai", date: "Mar 2024" },
 ];
 
 export const skillGroups = [
   {
-    title: "Frontend",
-    note: "Interfaces that stay out of the way",
-    skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "HTML / CSS", "Playwright"],
+    title: "Languages",
+    skills: ["Python", "TypeScript", "JavaScript", "Java", "C", "C++"],
   },
   {
     title: "Backend",
-    note: "The part that has to be dependable",
-    skills: [
-      "Node.js",
-      "Express",
-      "PostgreSQL",
-      "MySQL",
-      "Redis",
-      "BullMQ",
-      "Prisma",
-      "REST APIs",
-    ],
+    skills: ["Node.js", "Express", "FastAPI", "REST APIs", "BullMQ", "Redis", "Prisma", "JWT", "Clerk"],
   },
   {
-    title: "DevOps",
-    note: "Ship it, then keep it running",
-    skills: ["Docker", "Docker Compose", "AWS", "Git", "GitHub", "Vercel"],
+    title: "Frontend",
+    skills: ["React", "Next.js", "Tailwind CSS", "HTML / CSS", "Playwright"],
   },
   {
-    title: "AI / ML",
-    note: "Retrieval, models, and grounded output",
-    skills: [
-      "Python",
-      "TensorFlow",
-      "scikit-learn",
-      "XGBoost",
-      "NLP",
-      "OpenCV",
-      "LLMs",
-      "RAG",
-      "LangGraph",
-      "FAISS",
-      "SBERT",
-    ],
+    title: "Data",
+    skills: ["PostgreSQL", "MySQL", "Neon", "FAISS", "SBERT", "Pandas"],
+  },
+  {
+    title: "Cloud and tools",
+    skills: ["Docker", "Docker Compose", "AWS EC2", "Git", "GitHub", "Postman", "Vercel"],
+  },
+  {
+    title: "AI and ML",
+    skills: ["TensorFlow", "scikit-learn", "XGBoost", "NLP", "OpenCV", "LLMs", "RAG", "LangGraph"],
   },
 ];
 
-export const marqueeWords = [
-  "backend engineering",
-  "distributed queues",
-  "AI workflows",
-  "retrieval systems",
-  "product execution",
-  "reliable systems",
+export const aboutFacts = [
+  { label: "Based in", value: "Chennai, India" },
+  { label: "Open to", value: "Noida, Gurugram, Bengaluru" },
+  { label: "Work mode", value: "In office or hybrid" },
+  { label: "Joining", value: "Immediately" },
+];
+
+/**
+ * Media config.
+ * Add an item here and it appears on the site. To use a picture, drop the file
+ * in `public/media/` and set `image` to "/media/file-name.jpg".
+ */
+export type MediaItem = {
+  id: string;
+  title: string;
+  description: string;
+  date: string;
+  label: string;
+  image?: string;
+  alt?: string;
+  href?: string;
+};
+
+export const media: MediaItem[] = [
+  {
+    id: "portrait",
+    title: "Deekshant Gupta",
+    description: "Backend and AI engineer, Chennai.",
+    date: "2026",
+    label: "Portrait",
+    image: "/profile.jpg",
+    alt: "Portrait of Deekshant Gupta",
+  },
+  {
+    id: "pose-ai",
+    title: "Pose AI Hackathon — Winner",
+    description: "Won the VIT Chennai hackathon with a pose-estimation build.",
+    date: "Mar 2024",
+    label: "Award",
+  },
+  {
+    id: "mailscheduler-live",
+    title: "MailScheduler goes live",
+    description: "Email scheduling with restart-safe queues, deployed on Vercel.",
+    date: "2025",
+    label: "Launch",
+    href: "https://mail-scheduler-122f.vercel.app/",
+  },
 ];
 
 export const navLinks = [
   { label: "Work", href: "#work" },
   { label: "Experience", href: "#experience" },
-  { label: "Skills", href: "#skills" },
+  { label: "Media", href: "#media" },
   { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];

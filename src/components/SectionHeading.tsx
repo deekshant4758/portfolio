@@ -1,34 +1,21 @@
 import { Reveal } from "./ui/Reveal";
 
 type SectionHeadingProps = {
-  index: string;
   title: string;
   note?: string;
   id?: string;
 };
 
-export function SectionHeading({ index, title, note, id }: SectionHeadingProps) {
+export function SectionHeading({ title, note }: SectionHeadingProps) {
   return (
-    <div id={id} className="scroll-mt-24">
-      <div className="flex items-end justify-between gap-6 border-b border-line pb-4">
-        <div className="flex items-baseline gap-4 sm:gap-6">
-          <span className="font-mono text-[11px] tracking-[0.2em] text-dim">{index}</span>
-          <h2 className="font-display text-3xl font-semibold tracking-[-0.04em] text-fg sm:text-4xl md:text-5xl">
-            {title}
-          </h2>
-        </div>
-        {note ? (
-          <span className="hidden pb-1 font-mono text-[11px] tracking-[0.14em] text-dim uppercase sm:block">
-            {note}
-          </span>
-        ) : null}
-      </div>
+    <div className="md:pt-2">
+      <h2 className="font-serif text-[26px] leading-none text-ink sm:text-[28px]">{title}</h2>
+      {note ? <p className="mt-2 text-[13px] leading-5 text-dim">{note}</p> : null}
     </div>
   );
 }
 
 export function Section({
-  index,
   title,
   note,
   id,
@@ -36,11 +23,16 @@ export function Section({
   className = "",
 }: SectionHeadingProps & { children: React.ReactNode; className?: string }) {
   return (
-    <section id={id} className={`pt-20 sm:pt-28 ${className}`}>
-      <Reveal>
-        <SectionHeading index={index} title={title} note={note} />
-      </Reveal>
-      {children}
+    <section
+      id={id}
+      className={`scroll-mt-24 border-t border-line py-14 sm:py-20 ${className}`}
+    >
+      <div className="grid gap-8 md:grid-cols-[160px_1fr] md:gap-12">
+        <Reveal>
+          <SectionHeading title={title} note={note} />
+        </Reveal>
+        <div className="min-w-0">{children}</div>
+      </div>
     </section>
   );
 }

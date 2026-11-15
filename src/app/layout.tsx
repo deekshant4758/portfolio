@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { profile } from "@/lib/data";
 
@@ -15,8 +15,9 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  weight: "400",
   subsets: ["latin"],
   display: "swap",
 });
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
     template: "%s — Deekshant Gupta",
   },
   description:
-    "Backend-focused engineer building automation, AI workflows, and data-heavy products. SDE Intern at Outbox Labs, B.Tech CSE (AI/ML) at VIT Chennai.",
+    "Backend and AI engineer in Chennai. Email infrastructure at Outbox Labs supporting 50,000+ accounts, credit-risk models, and grounded retrieval.",
   keywords: [
     "Deekshant Gupta",
     "Backend Engineer",
@@ -49,14 +50,14 @@ export const metadata: Metadata = {
     siteName: "Deekshant Gupta",
     title: "Deekshant Gupta — Backend & AI Engineer",
     description:
-      "Backend-focused engineer building automation, AI workflows, and data-heavy products.",
+      "Backend and AI engineer in Chennai. Email infrastructure at Outbox Labs supporting 50,000+ accounts, credit-risk models, and grounded retrieval.",
     images: [{ url: "/profile.jpg", width: 600, height: 600, alt: "Deekshant Gupta" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Deekshant Gupta — Backend & AI Engineer",
     description:
-      "Backend-focused engineer building automation, AI workflows, and data-heavy products.",
+      "Backend and AI engineer in Chennai. Email infrastructure, credit-risk models and grounded retrieval.",
     images: ["/profile.jpg"],
   },
   icons: {
@@ -68,8 +69,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#09090b",
-  colorScheme: "dark",
+  themeColor: "#f7f5ef",
+  colorScheme: "light",
 };
 
 const personSchema = {
@@ -78,6 +79,7 @@ const personSchema = {
   name: profile.name,
   url: siteUrl,
   email: `mailto:${profile.email}`,
+  telephone: profile.phone,
   jobTitle: profile.role,
   image: `${siteUrl}/profile.jpg`,
   sameAs: [profile.github, profile.linkedin, profile.leetcode],
@@ -85,7 +87,7 @@ const personSchema = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <head>
         <script
           type="application/ld+json"
@@ -93,7 +95,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body
-        className={`${geist.variable} ${geistMono.variable} ${spaceGrotesk.variable} antialiased`}
+        className={`${geist.variable} ${geistMono.variable} ${instrumentSerif.variable} antialiased`}
       >
         {children}
       </body>
