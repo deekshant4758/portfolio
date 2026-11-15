@@ -14,19 +14,20 @@ export function About() {
           </p>
           <p>
             I studied Computer Science at <span className="text-ink">VIT Chennai</span>, specialising
-            in AI and machine learning, and graduated in April 2026. Most recently I was an SDE
-            intern at <span className="text-ink">Outbox Labs</span>, where I worked on email
-            infrastructure supporting 50,000+ Google and Microsoft accounts.
+            in AI and machine learning, and graduated in 2026. I&apos;m now a product engineer
+            intern at <span className="text-ink">Agentropic</span>, building Python backends and
+            on-premise retrieval systems.
           </p>
           <p>
-            My work sits where backend engineering meets product. I&apos;ve built email
-            infrastructure at scale, a visual studio for AI pipelines, and a retrieval system that
-            turns dense PDFs into grounded questions. Different problems, same instinct: make the
-            unreliable parts reliable, then make the surface feel effortless.
+            My work sits where backend engineering meets product. I&apos;ve scaled email
+            infrastructure to 50,000+ accounts at <span className="text-ink">Outbox Labs</span>,
+            built a visual studio for AI pipelines, and worked on retrieval systems that turn dense
+            PDFs into grounded answers. Different problems, same instinct: make the unreliable parts
+            reliable, then make the surface feel effortless.
           </p>
           <p>
             Right now I&apos;m looking for a backend or AI engineering role where I can own systems
-            end to end. I&apos;m based in Chennai and open to relocating to{" "}
+            end to end. I&apos;m based in {profile.location} and open to roles in{" "}
             {profile.relocation}.
           </p>
         </div>

@@ -16,7 +16,7 @@ Built with **Next.js 16**, **TypeScript**, **Tailwind CSS v4**, and **Motion**.
 | Styling    | Tailwind CSS v4                    |
 | Animation  | Motion (`motion/react`)            |
 | Icons      | Lucide + custom brand SVGs         |
-| Deployment | Vercel                             |
+| Deployment | Netlify                            |
 
 ## Sections
 
@@ -43,6 +43,9 @@ All copy, projects, experience, skills, certifications, media, and links live in
 
 The résumé and portrait are served from `public/resume.pdf` and `public/profile.jpg`.
 
+Certifications are clickable when they have an `href`. Certificate files live in
+`public/certifications/`.
+
 ### Adding a media item
 
 The Media section is driven by the `media` array in `src/lib/data.ts`:
@@ -63,8 +66,9 @@ export const media: MediaItem[] = [
 ```
 
 Add an object to the array and it appears on the site. To include a picture, drop the file in
-`public/media/` and set `image` to `"/media/<file-name>"`. `label`, `date`, `image`, `alt`, and
-`href` are all optional except `id`, `title`, and `description`.
+`public/media/` and set `image` to `"/media/<file-name>"`. Clicking an item with an image opens
+it in a lightbox; items without an image but with `href` open that link. `label`, `date`, `image`,
+`alt`, and `href` are optional except `id`, `title`, and `description`.
 
 ## Scripts
 
@@ -75,10 +79,45 @@ npm run start      # serve the production build
 npm run typecheck  # TypeScript only
 ```
 
+## Credits
+
+The pixel cat is adapted from [oneko.js](https://github.com/adryd325/oneko.js) by adryd (MIT).
+The license is included at `public/oneko-LICENSE.txt`.
+
 ## Deploy
 
-1. Push the repository to GitHub.
-2. Import it in [Vercel](https://vercel.com/new).
-3. Deploy.
+The site is set up for **Netlify** (`netlify.toml`). Netlify's Next.js runtime handles the
+build automatically.
+
+### Updating an existing Netlify site
+
+```bash
+git add .
+git commit -m "Update portfolio"
+git push
+```
+
+Netlify watches the connected branch and redeploys on every push. You can also trigger a deploy
+from the Netlify dashboard with **Deploys → Trigger deploy → Deploy site**.
+
+If the repository is not connected yet:
+
+1. Push the project to GitHub.
+2. In Netlify, choose **Add new site → Import an existing project**.
+3. Pick the repository. Build command `npm run build`, publish directory `.next`.
+4. Node version 22 is set in `netlify.toml`; no environment variables are required.
+5. Deploy.
+
+### Deploying from the CLI
+
+```bash
+npm install -g netlify-cli
+netlify login
+netlify link          # link this folder to the existing Netlify site
+netlify deploy --build --prod
+```
+
+A drag-and-drop deploy will not work for this setup because Netlify needs to run the Next.js
+build. Use the Git integration or the CLI.
 
 The previous static site is preserved on the `legacy-static` git branch.

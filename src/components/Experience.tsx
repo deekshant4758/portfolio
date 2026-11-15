@@ -1,3 +1,4 @@
+import { ArrowUpRight } from "lucide-react";
 import { certifications, education, experience, skillGroups } from "@/lib/data";
 import { Reveal } from "./ui/Reveal";
 import { Section } from "./SectionHeading";
@@ -67,10 +68,27 @@ export function Experience() {
             <ul className="mt-3 space-y-2.5">
               {certifications.map((cert) => (
                 <li key={cert.name} className="flex items-baseline justify-between gap-4">
-                  <span className="text-[13.5px] leading-6 text-muted">
-                    {cert.name}
-                    <span className="text-dim"> — {cert.issuer}</span>
-                  </span>
+                  {cert.href ? (
+                    <a
+                      href={cert.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={`Open ${cert.name} certificate`}
+                      className="group inline-flex items-baseline gap-1 text-[13.5px] leading-6 text-muted transition-colors hover:text-ink"
+                    >
+                      <span className="link-underline">{cert.name}</span>
+                      <span className="text-dim"> — {cert.issuer}</span>
+                      <ArrowUpRight
+                        className="size-3 shrink-0 translate-y-px text-dim transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                        strokeWidth={1.6}
+                      />
+                    </a>
+                  ) : (
+                    <span className="text-[13.5px] leading-6 text-muted">
+                      {cert.name}
+                      <span className="text-dim"> — {cert.issuer}</span>
+                    </span>
+                  )}
                   <span className="shrink-0 font-mono text-[10px] text-dim">{cert.date}</span>
                 </li>
               ))}

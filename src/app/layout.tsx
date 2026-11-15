@@ -2,6 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { profile } from "@/lib/data";
+import { Cursor } from "@/components/Cursor";
+import { ClickChime } from "@/components/ClickChime";
+import { PixelCat } from "@/components/PixelCat";
 
 const geist = Geist({
   variable: "--font-geist",
@@ -31,13 +34,15 @@ export const metadata: Metadata = {
     template: "%s — Deekshant Gupta",
   },
   description:
-    "Backend and AI engineer in Chennai. Email infrastructure at Outbox Labs supporting 50,000+ accounts, credit-risk models, and grounded retrieval.",
+    "Backend and AI engineer in Gurugram. Python backends, on-premise RAG, email infrastructure at scale, and low-latency developer tools.",
   keywords: [
     "Deekshant Gupta",
     "Backend Engineer",
     "AI Engineer",
     "Next.js Developer",
     "Node.js",
+    "Python",
+    "Rust",
     "TypeScript",
     "Portfolio",
     "VIT Chennai",
@@ -50,14 +55,14 @@ export const metadata: Metadata = {
     siteName: "Deekshant Gupta",
     title: "Deekshant Gupta — Backend & AI Engineer",
     description:
-      "Backend and AI engineer in Chennai. Email infrastructure at Outbox Labs supporting 50,000+ accounts, credit-risk models, and grounded retrieval.",
+      "Backend and AI engineer in Gurugram. Python backends, on-premise RAG, email infrastructure at scale, and low-latency developer tools.",
     images: [{ url: "/profile.jpg", width: 600, height: 600, alt: "Deekshant Gupta" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Deekshant Gupta — Backend & AI Engineer",
     description:
-      "Backend and AI engineer in Chennai. Email infrastructure, credit-risk models and grounded retrieval.",
+      "Backend and AI engineer in Gurugram. Python backends, on-premise RAG, email infrastructure at scale, and low-latency developer tools.",
     images: ["/profile.jpg"],
   },
   icons: {
@@ -97,6 +102,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body
         className={`${geist.variable} ${geistMono.variable} ${instrumentSerif.variable} antialiased`}
       >
+        <Cursor />
+        <ClickChime />
+        <PixelCat />
         {children}
       </body>
     </html>
